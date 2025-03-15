@@ -2,7 +2,7 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/background"
+    android:background="@color/white"
     android:fillViewport="true">
 
     <LinearLayout
@@ -15,14 +15,14 @@
         <EditText
             android:id="@+id/et_email"
             style="@style/InputField"
-            android:hint="Enter your email"
+            android:hint="Email"
             android:inputType="textEmailAddress" />
 
         <!-- Password -->
         <EditText
             android:id="@+id/et_password"
             style="@style/InputField"
-            android:hint="Enter your password"
+            android:hint="Password"
             android:inputType="textPassword" />
 
         <!-- Login Button -->
@@ -30,19 +30,21 @@
             android:id="@+id/btn_login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginHorizontal="100dp"
             android:layout_marginTop="20dp"
-            android:backgroundTint="@color/purple_500"
-            android:text="Login"
-            android:textColor="@color/white" />
+            android:backgroundTint="@color/blue"
+            android:textColor="@color/white"
+            android:text="Login" />
 
         <!-- Signup Button -->
         <TextView
             android:id="@+id/btn_go_to_signup"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Create New Account"
-            android:textColor="@color/purple_500" />
+            android:layout_gravity="center_horizontal"
+            android:text="Don't have an account?"
+            android:textColor="@color/black" />
 
         <!-- Progress Bar -->
         <ProgressBar
