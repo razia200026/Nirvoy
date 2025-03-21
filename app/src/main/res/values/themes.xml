@@ -13,5 +13,7 @@
         <!-- Status bar -->
         <item name="android:statusBarColor">@color/blue</item>
         <item name="android:windowLightStatusBar">false</item> <!-- Light icons on dark status bar -->
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
     </style>
 </resources>

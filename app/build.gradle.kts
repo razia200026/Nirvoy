@@ -36,4 +36,7 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
     implementation(libs.androidx.constraintlayout)
+
+    implementation("com.google.android.material:material:1.12.0")
+
 }
