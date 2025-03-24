@@ -7,7 +7,6 @@ import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -15,14 +14,21 @@ public class MainActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    protected void onCreate(Bundle savedInstanceState)
+    {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        // Set Toolbar as ActionBar
+        // Toolbar as ActionBar
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         mAuth = FirebaseAuth.getInstance();
+
+        // click listener
+        findViewById(R.id.btn_emergency_settings).setOnClickListener(v ->
+        {
+            startActivity(new Intent(MainActivity.this, EmergencyContactsActivity.class));
+        });
     }
 
     // Inflate the menu

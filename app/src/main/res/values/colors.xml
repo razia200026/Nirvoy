@@ -8,6 +8,6 @@
     <color name="gray">#FF9E9E9E</color>    <!-- Light Gray 300 -->
 
     <!-- Optional: Shades for consistency -->
-    <color name="blue_light">#FF64B5F6</color> <!-- Light Blue 300 -->
+    <color name="blue_light">#82BEEF</color> <!-- Light Blue 300 -->
     <color name="red_light">#FFE57373</color> <!-- Light Red 300 -->
 </resources>

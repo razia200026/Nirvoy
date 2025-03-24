@@ -24,4 +24,13 @@
         android:textSize="24sp"
         android:textColor="@color/black"/>
 
+    <Button
+        android:id="@+id/btn_emergency_settings"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Emergency Settings"
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"/>
+
 </LinearLayout>

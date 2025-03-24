@@ -33,5 +33,10 @@
             </intent-filter>
         </activity>
 
+        <activity
+            android:name=".EmergencyContactsActivity"
+            android:label="Emergency Settings"
+            android:parentActivityName=".MainActivity"/>
+
     </application>
 </manifest>
