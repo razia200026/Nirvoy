@@ -8,17 +8,24 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.SetOptions;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SignupActivity extends AppCompatActivity {
     private EditText etEmail, etPassword;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
+        db = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
         etEmail = findViewById(R.id.et_email);
         etPassword = findViewById(R.id.et_password);
@@ -44,8 +51,25 @@ public class SignupActivity extends AppCompatActivity {
                 .addOnCompleteListener(task -> {
                     progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        startActivity(new Intent(this, MainActivity.class));
-                        finish();
+                        FirebaseUser firebaseUser = mAuth.getCurrentUser();
+                        if (firebaseUser != null) {
+                            String userId = firebaseUser.getUid();
+
+                            // Create user document in Firestore
+                            Map<String, Object> user = new HashMap<>();
+                            user.put("emergencyMessage", "HELP!!!");
+
+                            db.collection("users").document(userId)
+                                    .set(user, SetOptions.merge())
+                                    .addOnSuccessListener(unused -> {
+                                        // Only navigate after successful Firestore write
+                                        startActivity(new Intent(this, MainActivity.class));
+                                        finish();
+                                    })
+                                    .addOnFailureListener(e -> {
+                                        Toast.makeText(this, "Error saving user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                                    });
+                        }
                     } else {
                         Toast.makeText(this, "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
                     }

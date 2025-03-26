@@ -13,9 +13,12 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.SetOptions;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class EmergencyContactsActivity extends AppCompatActivity {
     private FirebaseFirestore db;
@@ -42,6 +45,7 @@ public class EmergencyContactsActivity extends AppCompatActivity {
 
         // Load existing data
         loadEmergencyData();
+        setupMessageListener();
 
         // Setup click listeners
         findViewById(R.id.btn_save_message).setOnClickListener(v -> saveMessage());
@@ -53,9 +57,12 @@ public class EmergencyContactsActivity extends AppCompatActivity {
         db.collection("users").document(userId)
                 .get()
                 .addOnSuccessListener(document -> {
-                    if(document.exists()) {
+                    if(document.exists() && document.contains("emergencyMessage")) {
                         etMessage.setText(document.getString("emergencyMessage"));
                     }
+                })
+                .addOnFailureListener(e ->{
+                    Toast.makeText(this, "Failed to load emergency data" , Toast.LENGTH_SHORT).show();
                 });
 
         // Load contacts
@@ -74,13 +81,43 @@ public class EmergencyContactsActivity extends AppCompatActivity {
                 });
     }
 
+    // Save message
     private void saveMessage() {
         String message = etMessage.getText().toString().trim();
+        if (message.isEmpty()) {
+            Toast.makeText(this, "Please enter a message", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        Map<String, Object> data = new HashMap<>();
+        data.put("emergencyMessage", message);
+
         db.collection("users").document(userId)
-                .update("emergencyMessage", message)
+                .set(data, SetOptions.merge())
                 .addOnSuccessListener(unused ->
-                        Toast.makeText(this, "Message saved!", Toast.LENGTH_SHORT).show());
+                {
+                    Toast.makeText(this, "Message saved!", Toast.LENGTH_SHORT).show();
+                })
+                .addOnFailureListener(e ->
+                {
+                    Toast.makeText(this, "Failed to save message" + e.getMessage(), Toast.LENGTH_SHORT).show();
+                });
     }
+
+    //real-time update to the message field
+    private void setupMessageListener() {
+        db.collection("users").document(userId)
+                .addSnapshotListener((document, error) -> {
+                    if(error != null) return;
+
+                    if(document != null && document.exists()) {
+                        String savedMessage = document.getString("emergencyMessage");
+                        if(savedMessage != null && !savedMessage.equals(etMessage.getText().toString())) {
+                            etMessage.setText(savedMessage);
+                        }
+                    }
+                });
+    }
+
 
     private void showAddContactDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
