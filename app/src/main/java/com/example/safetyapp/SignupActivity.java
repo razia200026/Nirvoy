@@ -32,9 +32,7 @@ public class SignupActivity extends AppCompatActivity {
         progressBar = findViewById(R.id.progress_bar);
 
         findViewById(R.id.btn_signup).setOnClickListener(v -> signupUser());
-        findViewById(R.id.btn_go_to_login).setOnClickListener(v -> {
-            startActivity(new Intent(this, LoginActivity.class));
-        });
+        findViewById(R.id.btn_go_to_login).setOnClickListener(v -> startActivity(new Intent(this, LoginActivity.class)));
     }
 
     private void signupUser() {
@@ -66,9 +64,7 @@ public class SignupActivity extends AppCompatActivity {
                                         startActivity(new Intent(this, MainActivity.class));
                                         finish();
                                     })
-                                    .addOnFailureListener(e -> {
-                                        Toast.makeText(this, "Error saving user data: " + e.getMessage(), Toast.LENGTH_LONG).show();
-                                    });
+                                    .addOnFailureListener(e -> Toast.makeText(this, "Error saving user data: " + e.getMessage(), Toast.LENGTH_LONG).show());
                         }
                     } else {
                         Toast.makeText(this, "Error: " + task.getException(), Toast.LENGTH_SHORT).show();
