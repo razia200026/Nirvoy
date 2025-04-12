@@ -25,7 +25,12 @@ public class MainActivity extends AppCompatActivity {
         mAuth = FirebaseAuth.getInstance();
 
         // click listener
-        findViewById(R.id.btn_emergency_settings).setOnClickListener(v ->
+        findViewById(R.id.btn_emergency_message).setOnClickListener(v ->
+        {
+            startActivity(new Intent(MainActivity.this, EmergencyMessageActivity.class));
+        });
+
+        findViewById(R.id.btn_emergency_contact).setOnClickListener(v ->
         {
             startActivity(new Intent(MainActivity.this, EmergencyContactsActivity.class));
         });

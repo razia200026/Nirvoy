@@ -14,7 +14,7 @@
         android:elevation="4dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"/>
 
-    <!-- Your existing content -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -23,13 +23,40 @@
         android:text="Welcome to SafetyApp!"
         android:textSize="24sp"
         android:textColor="@color/black"/>
-
+    <!--emergency message-->
     <Button
-        android:id="@+id/btn_emergency_settings"
-        android:layout_width="200dp"
+        android:id="@+id/btn_emergency_message"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
-        android:text="Emergency Settings"
+        android:text="Save Emergency Msg"
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"/>
+    <!--emergency contacts-->
+    <Button
+        android:id="@+id/btn_emergency_contact"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Your Emergency contacts"
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"/>
+    <!--Voice Assistance-->
+    <Button
+        android:id="@+id/btn_AI"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="AI"
+        android:backgroundTint="@color/blue"
+        android:textColor="@color/white"/>
+    <!--Settings-->
+    <Button
+        android:id="@+id/btn_settings"
+        android:layout_width="120dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Settings"
         android:backgroundTint="@color/blue"
         android:textColor="@color/white"/>
 
