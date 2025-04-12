@@ -6,34 +6,6 @@
     android:orientation="vertical"
     android:padding="16dp">
 
-    <!-- Pre-saved Message Section -->
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Emergency Message"
-        android:textSize="18sp"
-        android:textColor="@color/black"/>
-
-    <EditText
-        android:id="@+id/et_emergency_message"
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginTop="8dp"
-        android:gravity="top"
-        android:hint="Enter emergency message..."
-        android:inputType="textMultiLine"
-        android:padding="12dp"
-        android:textColor="@color/black"/>
-
-    <Button
-        android:id="@+id/btn_save_message"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="8dp"
-        android:text="Save Message"
-        android:backgroundTint="@color/blue"
-        android:textColor="@color/white"/>
-
     <!-- Contacts List Header -->
     <TextView
         android:layout_width="match_parent"
