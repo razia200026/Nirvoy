@@ -24,8 +24,8 @@ public class LoginActivity extends AppCompatActivity {
         etPassword = findViewById(R.id.et_password);
         progressBar = findViewById(R.id.progress_bar);
 
-        findViewById(R.id.btn_login).setOnClickListener(v -> loginUser());
-        findViewById(R.id.btn_go_to_signup).setOnClickListener(v -> {
+        findViewById(R.id.imageView5).setOnClickListener(v -> loginUser());
+        findViewById(R.id.btnNewAccount).setOnClickListener(v -> {
             startActivity(new Intent(this, SignupActivity.class));
         });
     }
