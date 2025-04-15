@@ -25,9 +25,10 @@
             <!-- Icon Image -->
             <ImageView
                 android:id="@+id/imageView"
-                android:layout_width="400dp"
-                android:layout_height="263dp"
+                android:layout_width="327dp"
+                android:layout_height="211dp"
                 android:layout_gravity="center"
+                android:layout_marginTop="15dp"
                 android:layout_marginBottom="0dp"
                 android:scaleType="centerCrop"
                 app:srcCompat="@drawable/stay_app" />
@@ -35,13 +36,12 @@
         </LinearLayout>
         <!-- Email Input -->
         <!-- Password Input -->
+
         <EditText
             android:id="@+id/inputEmail"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="32dp"
-            android:layout_marginTop="60dp"
-            android:layout_marginEnd="32dp"
+            android:layout_width="332dp"
+            android:layout_height="53dp"
+            android:layout_marginTop="28dp"
             android:background="@drawable/input_bg"
             android:drawableStart="@drawable/email_24"
             android:drawablePadding="10dp"
@@ -51,18 +51,18 @@
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
-            android:textColorHint="#100F0F"
-            android:textSize="20sp"
             android:textColor="@color/black"
+            android:textColorHint="#100F0F"
+            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.493"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imageLayout" />
 
         <EditText
             android:id="@+id/inputPassword"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_width="332dp"
+            android:layout_height="53dp"
             android:layout_marginStart="32dp"
             android:layout_marginTop="20dp"
             android:layout_marginEnd="32dp"
@@ -70,16 +70,16 @@
             android:drawableStart="@drawable/lock_24"
             android:drawablePadding="10dp"
             android:hint="Password"
-            android:textColor="@color/black"
             android:inputType="textPassword"
             android:paddingStart="20dp"
             android:paddingTop="10dp"
             android:paddingEnd="10dp"
             android:paddingBottom="10dp"
+            android:textColor="@color/black"
             android:textColorHint="#100F0F"
-            android:textSize="20sp"
+            android:textSize="18dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintHorizontal_bias="0.466"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/inputEmail" />
 
@@ -89,19 +89,19 @@
             android:layout_height="47dp"
             app:layout_constraintBottom_toTopOf="@+id/btnNewAccount"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.889"
+            app:layout_constraintHorizontal_bias="0.886"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/inputPassword"
-            app:layout_constraintVertical_bias="0.21"
+            app:layout_constraintVertical_bias="0.191"
             app:srcCompat="@drawable/login" />
 
         <Button
             android:id="@+id/btnNewAccount"
-            android:layout_width="358dp"
+            android:layout_width="297dp"
             android:layout_height="51dp"
             android:text=" Create New Account "
             android:textColor="#100F0F"
-            android:textSize="17dp"
+            android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -116,7 +116,7 @@
             android:layout_height="26dp"
             android:text=" Forget Password"
             android:textColor="@color/blue"
-            android:textSize="14sp"
+            android:textSize="12dp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
