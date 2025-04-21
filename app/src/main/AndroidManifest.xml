@@ -44,7 +44,5 @@
             android:name=".EmergencyMessageActivity"
             android:label="Emergency Message"
             android:parentActivityName=".MainActivity"/>
-
-
     </application>
 </manifest>
