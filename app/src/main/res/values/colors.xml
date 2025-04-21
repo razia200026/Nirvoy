@@ -6,6 +6,9 @@
     <color name="colorPrimaryDark">#3262C4</color>    <!-- Material Blue 500 -->
     <color name="red">#FFD32F2F</color>     <!-- Material Red 700 -->
     <color name="gray">#FF9E9E9E</color>    <!-- Light Gray 300 -->
+    <color name="Leukocyte_White">#f2f1ed</color>
+
+
 
     <!-- Optional: Shades for consistency -->
     <color name="blue_light">#82BEEF</color> <!-- Light Blue 300 -->
