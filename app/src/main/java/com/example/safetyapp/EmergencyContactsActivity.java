@@ -112,6 +112,7 @@ import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -177,8 +178,18 @@ public class EmergencyContactsActivity extends AppCompatActivity {
                         contacts.add(contact);
                     }
                     adapter.notifyDataSetChanged();
+
+                    // Hide or Show 'No Contacts' text
+                    TextView tvNoContacts = findViewById(R.id.tv_no_contacts);
+                    if (contacts.isEmpty()) {
+                        tvNoContacts.setVisibility(View.VISIBLE);
+                    } else {
+                        tvNoContacts.setVisibility(View.GONE);
+                    }
                 });
     }
+
+
 
     private void showAddContactDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
