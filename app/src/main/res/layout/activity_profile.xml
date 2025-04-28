@@ -10,7 +10,8 @@
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center_horizontal">
+        android:gravity="center_horizontal"
+        android:padding="16dp">
 
         <!-- Profile Header -->
         <LinearLayout
@@ -29,12 +30,11 @@
                 android:background="@drawable/circle_background"
                 android:padding="10dp" />
 
-
             <TextView
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="appsnippuser"
+                android:text="Username"
                 android:textColor="#FFFFFF"
                 android:textSize="20sp"
                 android:layout_marginTop="10dp"
@@ -44,29 +44,27 @@
                 android:id="@+id/email"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="developer@appsnipp.com"
+                android:text="Email"
                 android:textColor="#FFFFFF"
                 android:textSize="14sp" />
 
-            <!-- Back Button -->
+            <!-- Edit Profile Button -->
             <com.google.android.material.button.MaterialButton
-                android:id="@+id/btn_back"
+                android:id="@+id/btn_edit_profile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Back to Home"
+                android:text="Edit Profile"
                 android:textColor="@android:color/white"
                 android:backgroundTint="#FF69B4"
-                app:icon="@drawable/arrow_back_24"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:layout_marginTop="10dp" />
+                app:iconGravity="textStart"
+                app:iconPadding="8dp"
+                android:paddingStart="20dp"
+                android:paddingEnd="20dp"
+                android:layout_marginTop="10dp" />
         </LinearLayout>
 
         <!-- Account Info Title -->
         <TextView
-            android:id="@+id/account_info_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Account Info"
@@ -84,94 +82,130 @@
 
             <!-- Name -->
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:paddingVertical="8dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/user"
-                    android:scaleType="centerCrop" />
                 <TextView
+                    android:id="@+id/text_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Name: "
+                    android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/edit_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
-                    android:textSize="16sp"
+                    android:hint="Enter Name"
                     android:textColor="#000000"
-                    android:text="Name: developer" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Mobile -->
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:paddingVertical="8dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/mobile"
-                    android:scaleType="centerCrop" />
-
                 <TextView
+                    android:id="@+id/text_mobile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:text="Mobile: "
                     android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/edit_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Mobile"
                     android:textColor="#000000"
-                    android:text="Mobile: +91-8129999999" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Email -->
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:paddingVertical="8dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/email"
-                    android:scaleType="centerCrop" />
-
                 <TextView
+                    android:id="@+id/text_email"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:text="Email: "
                     android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/edit_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Email"
                     android:textColor="#000000"
-                    android:text="Email: developer@appsnipp.com" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
 
             <!-- Address -->
             <LinearLayout
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:gravity="center_vertical"
                 android:paddingVertical="8dp">
 
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@drawable/location"
-                    android:scaleType="centerCrop" />
-
                 <TextView
+                    android:id="@+id/text_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="16dp"
+                    android:text="Address: "
                     android:textSize="16sp"
+                    android:textColor="#000000" />
+
+                <EditText
+                    android:id="@+id/edit_address"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="Enter Address"
                     android:textColor="#000000"
-                    android:text="Address: Avenue 2nd Street NW SY" />
+                    android:textSize="16sp"
+                    android:visibility="gone" />
             </LinearLayout>
         </LinearLayout>
+
+        <!-- Back to Home Button -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_back_home"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back to Home"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#FF69B4"
+            app:icon="@drawable/arrow_back_24"
+            app:iconGravity="textStart"
+            app:iconPadding="8dp"
+            android:paddingStart="20dp"
+            android:paddingEnd="20dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="20dp" />
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:indeterminate="true"
+            style="@android:style/Widget.DeviceDefault.Light.ProgressBar.Large" />
+
+
     </LinearLayout>
 </ScrollView>

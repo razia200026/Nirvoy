@@ -5,7 +5,7 @@ plugins {
 
 android {
     namespace = "com.example.safetyapp"
-    compileSdk = 34
+    compileSdk = 35
 
     defaultConfig {
         applicationId = "com.example.safetyapp"
@@ -36,7 +36,8 @@ dependencies {
     implementation(libs.androidx.appcompat)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.material)
-    implementation ("androidx.activity:activity:1.8.0")
+    implementation ("androidx.activity:activity:1.10.1")
     implementation ("com.google.android.material:material:1.9.0")
+    implementation ("com.google.firebase:firebase-database:20.3.0")
 
 }
