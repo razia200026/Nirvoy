@@ -13,7 +13,8 @@
         android:minHeight="48dp"
         android:layout_marginBottom="8dp"
         android:padding="16dp"
-        android:background="@color/blue_light"
+        android:textColor="@color/black"
+        android:background="@color/white"
         android:hint="Enter Contact Name"
         android:inputType="textPersonName"/>
 
@@ -25,7 +26,8 @@
         android:minHeight="48dp"
         android:padding="16dp"
         android:layout_marginTop="8dp"
-        android:background="@color/blue_light"
+        android:textColor="@color/black"
+        android:background="@color/white"
         android:hint="Phone Number"
         android:inputType="phone"/>
 

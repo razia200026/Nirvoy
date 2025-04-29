@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/logbg">
+    android:background="@drawable/profil_bk">
 
     <LinearLayout
         android:orientation="vertical"
@@ -19,7 +19,7 @@
             android:layout_height="250dp"
             android:orientation="vertical"
             android:gravity="center"
-            android:background="@drawable/logbg">
+            android:background="@drawable/profile_page">
 
             <ImageView
                 android:id="@+id/profile_image"
@@ -34,10 +34,10 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Username"
-                android:textColor="#FFFFFF"
-                android:textSize="20sp"
                 android:layout_marginTop="10dp"
+                android:text="Username"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -45,7 +45,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Email"
-                android:textColor="#FFFFFF"
+                android:textColor="@color/black"
                 android:textSize="14sp" />
 
             <!-- Edit Profile Button -->
@@ -54,8 +54,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Edit Profile"
+                app:icon="@drawable/edit_24"
                 android:textColor="@android:color/white"
-                android:backgroundTint="#FF69B4"
+                android:backgroundTint="@color/blue"
                 app:iconGravity="textStart"
                 app:iconPadding="8dp"
                 android:paddingStart="20dp"
@@ -75,25 +76,41 @@
 
         <!-- Info Section -->
         <LinearLayout
+            xmlns:android="http://schemas.android.com/apk/res/android"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="20dp">
 
-            <!-- Name -->
+            <!-- Name Box -->
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="8dp">
+                android:background="@drawable/box_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_name"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Name: "
-                    android:textSize="16sp"
-                    android:textColor="#000000" />
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:src="@drawable/user"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/text_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Name: "
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edit_name"
@@ -105,20 +122,35 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <!-- Mobile -->
+            <!-- Mobile Box -->
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="8dp">
+                android:background="@drawable/box_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_mobile"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Mobile: "
-                    android:textSize="16sp"
-                    android:textColor="#000000" />
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:layout_marginEnd="8dp"
+                        android:src="@drawable/mobile" />
+
+                    <TextView
+                        android:id="@+id/text_mobile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Mobile: "
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edit_mobile"
@@ -130,20 +162,35 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <!-- Email -->
+            <!-- Email Box -->
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="8dp">
+                android:background="@drawable/box_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_email"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Email: "
-                    android:textSize="16sp"
-                    android:textColor="#000000" />
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="30dp"
+                        android:src="@drawable/email"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/text_email"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Email: "
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edit_email"
@@ -155,20 +202,35 @@
                     android:visibility="gone" />
             </LinearLayout>
 
-            <!-- Address -->
+            <!-- Address Box -->
             <LinearLayout
-                android:orientation="vertical"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingVertical="8dp">
+                android:background="@drawable/box_background"
+                android:padding="12dp"
+                android:layout_marginBottom="12dp"
+                android:orientation="vertical">
 
-                <TextView
-                    android:id="@+id/text_address"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:orientation="horizontal"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Address: "
-                    android:textSize="16sp"
-                    android:textColor="#000000" />
+                    android:gravity="center_vertical">
+
+                    <ImageView
+                        android:layout_width="27dp"
+                        android:layout_height="27dp"
+                        android:src="@drawable/location"
+                        android:layout_marginEnd="8dp" />
+
+                    <TextView
+                        android:id="@+id/text_address"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Address: "
+                        android:textSize="16sp"
+                        android:textColor="#000000" />
+                </LinearLayout>
 
                 <EditText
                     android:id="@+id/edit_address"
@@ -179,7 +241,8 @@
                     android:textSize="16sp"
                     android:visibility="gone" />
             </LinearLayout>
-        </LinearLayout>
+
+    </LinearLayout>
 
         <!-- Back to Home Button -->
         <com.google.android.material.button.MaterialButton
@@ -188,7 +251,7 @@
             android:layout_height="wrap_content"
             android:text="Back to Home"
             android:textColor="@android:color/white"
-            android:backgroundTint="#FF69B4"
+            android:backgroundTint="@color/blue"
             app:icon="@drawable/arrow_back_24"
             app:iconGravity="textStart"
             app:iconPadding="8dp"
