@@ -181,26 +181,40 @@ public class EmergencyMessageActivity extends AppCompatActivity {
         return savedTemplate + "\n\nMy location: " + locationUrl;
     }
 
-    private void sendWhatsApp(String phoneNumber, String message) {
-        try {
-            phoneNumber = phoneNumber.replace("+", "").replaceAll("\\s", "");
-            String url = "https://api.whatsapp.com/send?phone=" + phoneNumber
-                    + "&text=" + URLEncoder.encode(message, "UTF-8");
+//    private void sendWhatsApp(String phoneNumber, String message) {
+//        try {
+//            phoneNumber = phoneNumber.replace("+", "").replaceAll("\\s", "");
+//            String url = "https://api.whatsapp.com/send?phone=" + phoneNumber
+//                    + "&text=" + URLEncoder.encode(message, "UTF-8");
+//
+//            Intent intent = new Intent(Intent.ACTION_VIEW);
+//            intent.setData(Uri.parse(url));
+//            intent.setPackage("com.whatsapp");
+//
+//            if (intent.resolveActivity(getPackageManager()) != null) {
+//                startActivity(intent);
+//            } else {
+//                Toast.makeText(this, "WhatsApp not found", Toast.LENGTH_SHORT).show();
+//            }
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            Toast.makeText(this, "Error sending via WhatsApp", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+private void sendWhatsApp(String phoneNumber, String message) {
+    try {
+        phoneNumber = phoneNumber.replace("+", "").replaceAll("\\s", "");
+        String url = "https://wa.me/" + phoneNumber + "?text=" + URLEncoder.encode(message, "UTF-8");
 
-            Intent intent = new Intent(Intent.ACTION_VIEW);
-            intent.setData(Uri.parse(url));
-            intent.setPackage("com.whatsapp");
+        Intent intent = new Intent(Intent.ACTION_VIEW);
+        intent.setData(Uri.parse(url));
+        startActivity(intent);  // No need to check for installed package; browser will handle it
 
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "WhatsApp not found", Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            Toast.makeText(this, "Error sending via WhatsApp", Toast.LENGTH_SHORT).show();
-        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        Toast.makeText(this, "Error sending WhatsApp message", Toast.LENGTH_SHORT).show();
     }
+}
 
     private void sendSmsDirectly(String phoneNumber, String message) {
         try {
