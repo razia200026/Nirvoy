@@ -102,6 +102,7 @@
 //}
 package com.example.safetyapp;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -127,6 +128,7 @@ public class MainActivity extends AppCompatActivity {
     private View pulseView;
     private Animation pulseAnimation;
 
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -182,6 +184,10 @@ public class MainActivity extends AppCompatActivity {
 
         findViewById(R.id.btn_emergency_contact).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, EmergencyContactsActivity.class))
+        );
+
+        findViewById(R.id.btn_liveLocation).setOnClickListener(v ->
+                startActivity(new Intent(MainActivity.this,  live_location.class))
         );
 
         // Pulse Effect Setup
