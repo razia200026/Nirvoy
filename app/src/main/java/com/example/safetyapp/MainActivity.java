@@ -108,15 +108,16 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 import android.widget.FrameLayout;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 
+import com.example.safetyapp.helper.EmergencyMessageHelper;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 
@@ -199,12 +200,17 @@ public class MainActivity extends AppCompatActivity {
         pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse);
 
         // Start animation when Start Shake Detection button is clicked
-        startShakeButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pulseView.startAnimation(pulseAnimation);
-            }
+        startShakeButton.setOnClickListener(v -> {
+            pulseView.startAnimation(pulseAnimation);
+
+            new AlertDialog.Builder(MainActivity.this)
+                    .setTitle("SOS")
+                    .setMessage("Send emergency message via WhatsApp or SMS?")
+                    .setPositiveButton("WhatsApp", (dialog, which) -> new EmergencyMessageHelper(MainActivity.this).sendMessage("whatsapp"))
+                    .setNegativeButton("SMS", (dialog, which) -> new EmergencyMessageHelper(MainActivity.this).sendMessage("sms"))
+                    .show();
         });
+
 
         // Make sure the drawer is CLOSED at startup
         if (drawerLayout.isDrawerOpen(GravityCompat.START)) {

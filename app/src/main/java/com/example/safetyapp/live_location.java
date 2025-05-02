@@ -136,21 +136,15 @@ public class live_location extends AppCompatActivity {
     private void sendWhatsApp(String phoneNumber, String message) {
         try {
             phoneNumber = phoneNumber.replace("+", "").replaceAll("\\s", "");
-            String url = "https://api.whatsapp.com/send?phone=" + phoneNumber
-                    + "&text=" + URLEncoder.encode(message, "UTF-8");
+            String url = "https://wa.me/" + phoneNumber + "?text=" + URLEncoder.encode(message, "UTF-8");
 
             Intent intent = new Intent(Intent.ACTION_VIEW);
             intent.setData(Uri.parse(url));
-            intent.setPackage("com.whatsapp");
+            startActivity(intent);  // No need to check for installed package; browser will handle it
 
-            if (intent.resolveActivity(getPackageManager()) != null) {
-                startActivity(intent);
-            } else {
-                Toast.makeText(this, "WhatsApp not found", Toast.LENGTH_SHORT).show();
-            }
         } catch (Exception e) {
             e.printStackTrace();
-            Toast.makeText(this, "Error sending via WhatsApp", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Error sending WhatsApp message", Toast.LENGTH_SHORT).show();
         }
     }
 
