@@ -109,6 +109,7 @@ import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.FrameLayout;
 
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
@@ -192,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
         // Pulse Effect Setup
         pulseView = findViewById(R.id.pulse_view);
-        Button startShakeButton = findViewById(R.id.start_shake_button); // adjust if button id is different
+        FrameLayout startShakeButton = findViewById(R.id.btn_sos); // adjust if button id is different
 
         // Load the pulse animation
         pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse);
