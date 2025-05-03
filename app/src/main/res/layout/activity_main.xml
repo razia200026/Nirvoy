@@ -14,8 +14,8 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/white"
-        tools:ignore="ExtraText">
+        tools:ignore="ExtraText"
+        android:background="@drawable/home_page">
 
         <!-- Toolbar -->
         <androidx.appcompat.widget.Toolbar
@@ -46,6 +46,16 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="50dp"
             tools:ignore="UnknownId">
+            <!-- Glowing Pulse Ring Layer (3rd Layer) -->
+            <View
+                android:id="@+id/pulse_ring"
+                android:layout_width="190dp"
+                android:layout_height="190dp"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="35dp"
+                android:background="@drawable/pulse_ring_bg"
+                android:alpha="0.4" />
+
 
 
             <View
@@ -101,8 +111,8 @@
                     <!-- Emergency Contact -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btn_emergency_contact"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:layout_margin="10dp"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="12dp">
@@ -110,11 +120,12 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/Leukocyte_White"
+                            android:background="@drawable/border_emergency_section"
                             android:gravity="center"
                             android:orientation="vertical">
 
-                            <ImageView
+
+                        <ImageView
                                 android:layout_width="48dp"
                                 android:layout_height="40dp"
                                 android:gravity="center"
@@ -125,7 +136,7 @@
                                 android:layout_height="48dp"
                                 android:gravity="center"
                                 android:text="Emergency_Contact"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -134,8 +145,8 @@
                     <!-- Emergency Message -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btn_emergency_message"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:layout_margin="10dp"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="12dp">
@@ -143,7 +154,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/Leukocyte_White"
+                            android:background="@drawable/border_emergency_section"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -155,10 +166,10 @@
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="26dp"
+                                android:layout_height="48dp"
                                 android:gravity="center"
                                 android:text="Save Emergency Message"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -167,8 +178,8 @@
                     <!-- Share Live Location -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btn_liveLocation"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:layout_margin="10dp"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="12dp">
@@ -176,7 +187,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/Leukocyte_White"
+                            android:background="@drawable/border_emergency_section"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -188,10 +199,10 @@
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="48dp"
                                 android:gravity="center"
                                 android:text="Share Live_Location"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:textSize="10sp"
                                 android:textStyle="bold" />
                         </LinearLayout>
@@ -200,8 +211,8 @@
                     <!-- Settings -->
                     <androidx.cardview.widget.CardView
                         android:id="@+id/btn_settings"
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
+                        android:layout_width="130dp"
+                        android:layout_height="130dp"
                         android:layout_margin="10dp"
                         app:cardCornerRadius="15dp"
                         app:cardElevation="12dp">
@@ -209,7 +220,7 @@
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:background="@color/Leukocyte_White"
+                            android:background="@drawable/border_emergency_section"
                             android:gravity="center"
                             android:orientation="vertical">
 
@@ -221,12 +232,12 @@
 
                             <TextView
                                 android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
+                                android:layout_height="48dp"
                                 android:gravity="center"
                                 android:text="Settings"
-                                android:textColor="@color/black"
+                                android:textColor="@color/white"
                                 android:textSize="10sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"/>
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </GridLayout>

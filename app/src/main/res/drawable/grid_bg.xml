@@ -6,7 +6,11 @@
                android:topRightRadius="50dp"
                android:topLeftRadius="50dp" />
            <solid
-               android:color="@android:color/holo_blue_light"/>
+               android:color="@color/Leukocyte_White"/>
+           <stroke
+               android:width="1dp"
+               android:color="#3262C4" />
+
        </shape>
    </item>
 </selector>

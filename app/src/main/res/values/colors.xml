@@ -12,7 +12,7 @@
 
 
     <!-- Optional: Shades for consistency -->
-    <color name="blue_light">#82BEEF</color> <!-- Light Blue 300 -->
+    <color name="blue_light">#82E3FB</color> <!-- Light Blue 300 -->
     <color name="red_light">#FFE57373</color> <!-- Light Red 300 -->
     <color name="blue">#FF2196F3</color>
     <color name="colorRed">#C11515</color>
