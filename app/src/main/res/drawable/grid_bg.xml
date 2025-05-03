@@ -3,12 +3,13 @@
    <item>
        <shape android:shape="rectangle">
            <corners
+
                android:topRightRadius="50dp"
                android:topLeftRadius="50dp" />
            <solid
                android:color="@color/Leukocyte_White"/>
            <stroke
-               android:width="1dp"
+               android:width="2dp"
                android:color="#3262C4" />
 
        </shape>

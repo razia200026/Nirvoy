@@ -95,7 +95,7 @@
             <!-- Grid background container -->
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="414dp"
+                android:layout_height="396dp"
                 android:layout_alignParentBottom="true"
                 android:background="@drawable/grid_bg">
 
@@ -125,7 +125,7 @@
                             android:orientation="vertical">
 
 
-                        <ImageView
+                            <ImageView
                                 android:layout_width="48dp"
                                 android:layout_height="40dp"
                                 android:gravity="center"
@@ -237,7 +237,7 @@
                                 android:text="Settings"
                                 android:textColor="@color/white"
                                 android:textSize="10sp"
-                                android:textStyle="bold"/>
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </androidx.cardview.widget.CardView>
                 </GridLayout>
