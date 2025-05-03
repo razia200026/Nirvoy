@@ -161,6 +161,7 @@ public class MainActivity extends AppCompatActivity {
         );
         drawerLayout.addDrawerListener(toggle);
         toggle.syncState();
+        toggle.getDrawerArrowDrawable().setColor(getResources().getColor(R.color.white));
 
         // Setup NavigationView and handle menu clicks
         NavigationView navigationView = findViewById(R.id.nav_view);

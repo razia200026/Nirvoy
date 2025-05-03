@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/home_page"
+    android:gravity="center">
+
+    <ImageView
+        android:id="@+id/logoImageView"
+        android:layout_width="271dp"
+        android:layout_height="224dp"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="69dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="72dp"
+        android:contentDescription="App Icon"
+        android:src="@drawable/splash" />
+
+    <ImageView
+        android:id="@+id/staySafeImage"
+        android:layout_width="363dp"
+        android:layout_height="93dp"
+        android:layout_below="@id/logoImageView"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="-11dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="305dp"
+        android:contentDescription="App Text"
+        android:src="@drawable/stay_safe" />
+
+</RelativeLayout>
+

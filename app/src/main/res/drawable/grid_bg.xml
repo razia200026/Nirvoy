@@ -8,10 +8,6 @@
                android:topLeftRadius="50dp" />
            <solid
                android:color="@color/Leukocyte_White"/>
-           <stroke
-               android:width="2dp"
-               android:color="#3262C4" />
-
        </shape>
    </item>
 </selector>
