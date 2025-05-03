@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "160845916606",
+    "firebase_url": "https://safetyapp-8d6ff-default-rtdb.firebaseio.com",
     "project_id": "safetyapp-8d6ff",
     "storage_bucket": "safetyapp-8d6ff.firebasestorage.app"
   },
@@ -12,7 +13,20 @@
           "package_name": "com.example.safetyapp"
         }
       },
-      "oauth_client": [],
+      "oauth_client": [
+        {
+          "client_id": "160845916606-7usn3pn6df4hpfaqm76sddq49mebg4fe.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.safetyapp",
+            "certificate_hash": "d812260ad5449e4d5cc69de907a7d30c8d1a4164"
+          }
+        },
+        {
+          "client_id": "160845916606-0kd9a7ktjj2gtjk0abk4p3sdmrskc72j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
       "api_key": [
         {
           "current_key": "AIzaSyBOSW-WkZ4VM2pw04pt2EmTbUruFLgIW84"
@@ -20,7 +34,12 @@
       ],
       "services": {
         "appinvite_service": {
-          "other_platform_oauth_client": []
+          "other_platform_oauth_client": [
+            {
+              "client_id": "160845916606-0kd9a7ktjj2gtjk0abk4p3sdmrskc72j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         }
       }
     }
