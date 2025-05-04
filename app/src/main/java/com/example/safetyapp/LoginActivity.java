@@ -56,7 +56,7 @@ public class LoginActivity extends AppCompatActivity {
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         // Listeners
-        findViewById(R.id.imageView5).setOnClickListener(v -> attemptLogin());
+        findViewById(R.id.btnLogin).setOnClickListener(v -> attemptLogin());
         findViewById(R.id.btnNewAccount).setOnClickListener(v ->
                 startActivity(new Intent(this, SignupActivity.class))
         );
