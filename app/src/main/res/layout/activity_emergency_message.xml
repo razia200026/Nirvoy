@@ -1,48 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@drawable/home_page">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
-        android:padding="16dp"
-        android:background="@drawable/logbg">
+        android:padding="16dp">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="65dp"
+            android:layout_marginTop="10dp"
             android:text="Emergency Message"
             android:textAlignment="center"
-            android:textStyle="bold"
-            android:textSize="24sp"
-            android:textColor="@android:color/black"
-            android:layout_marginTop="10dp"/>
+            android:textColor="@android:color/white"
+            android:textSize="25sp"
+            android:textStyle="bold" />
 
-        <!-- Preview Saved Message -->
-        <TextView
-            android:id="@+id/tv_saved_message"
+        <!-- Combined Message Preview + Send Button -->
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:background="@color/white"
-            android:padding="12dp"
-            android:text="Loading message..."
-            android:textColor="@android:color/black"
-            android:textSize="16sp" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
 
-        <!-- SEND Button -->
-        <Button
-            android:id="@+id/btn_send"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="SEND"
-            android:backgroundTint="@color/blue"
-            android:textColor="@android:color/white"/>
+            <TextView
+                android:id="@+id/tv_saved_message"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/bubble_received"
+                android:padding="16dp"
+                android:text="Loading message..."
+                android:textColor="@android:color/black"
+                android:textSize="16sp" />
 
-        <!-- Divider -->
+            <Button
+                android:id="@+id/btn_send"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:backgroundTint="@color/blue"
+                android:text="SEND"
+                android:textSize="16sp"
+                android:textColor="@android:color/white"
+                android:minHeight="56dp"
+                android:minWidth="80dp"/>
+        </LinearLayout>
+
+
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
@@ -53,8 +63,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Save Custom Message:"
-            android:textColor="@color/black"
-            android:textSize="20sp"
+            android:textColor="@color/white"
+            android:textSize="25sp"
             android:textStyle="bold"/>
 
         <!-- Edit and Save Section -->
@@ -73,10 +83,11 @@
         <Button
             android:id="@+id/btn_save_message"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="62dp"
             android:layout_marginTop="8dp"
-            android:text="Save Message"
             android:backgroundTint="@color/blue"
-            android:textColor="@color/white"/>
+            android:text="Save Message"
+            android:textSize="20sp"
+            android:textColor="@color/white" />
     </LinearLayout>
 </ScrollView>

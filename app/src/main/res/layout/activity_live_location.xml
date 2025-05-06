@@ -1,19 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/layout_live_location"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="@android:color/white">
+    android:background="@drawable/home_page">
 
+    <!-- Location Icon (Add vector drawable for better scalability) -->
+    <ImageView
+        android:id="@+id/imgLocation"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="60dp"
+        android:src="@drawable/map"
+        android:scaleType="centerInside" />
+
+    <!-- Title Text -->
+    <TextView
+        android:id="@+id/txtTitle"
+        android:layout_below="@id/imgLocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_centerHorizontal="true"
+        android:text="Share Your Live Location"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF" />
+
+    <!-- Description Text -->
+    <TextView
+        android:id="@+id/txtDescription"
+        android:layout_below="@id/txtTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:layout_centerHorizontal="true"
+        android:text="Let your emergency contacts know where you are in real-time."
+        android:textSize="16sp"
+        android:textColor="#FFFFFF"
+        android:gravity="center" />
+
+    <!-- Share Location Button with Rounded Corners and Shadow -->
     <Button
         android:id="@+id/btnShareLocation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Share My Location"
-        android:textSize="18sp"
-        android:padding="12dp"
-        android:backgroundTint="#FF5722"
-        android:textColor="@android:color/white" />
-
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="#4E31AA"
+        android:drawablePadding="12dp"
+        android:elevation="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:padding="16dp"
+        android:text="Share My Live Location"
+        android:textColor="@android:color/white"
+        android:textSize="18sp" />
 </RelativeLayout>
