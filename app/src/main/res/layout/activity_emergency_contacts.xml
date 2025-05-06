@@ -6,7 +6,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="@drawable/logbg">
+    android:background="@drawable/home_page">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/top_background"/>
 
     <!-- Contacts List Header -->
     <TextView
@@ -15,8 +19,8 @@
         android:layout_height="wrap_content"
         android:text="Emergency Contacts"
         android:textStyle="bold"
-        android:textSize="22sp"
-        android:textColor="@color/black"
+        android:textSize="25sp"
+        android:textColor="@color/white"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -28,7 +32,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="12dp"
         android:text="Please add or select a contact from your phonebook..."
-        android:textColor="#666"
+        android:textColor="#000"
+        android:textStyle="bold"
         android:textSize="16sp"
         app:layout_constraintTop_toBottomOf="@id/tv_emergency_contacts"
         app:layout_constraintStart_toStartOf="parent"
