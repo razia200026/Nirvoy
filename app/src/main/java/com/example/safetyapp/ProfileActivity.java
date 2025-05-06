@@ -4,23 +4,16 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.LinearLayout;
-import android.content.Intent;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DataSnapshot;
-import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.database.*;
 
 import java.util.HashMap;
 
@@ -34,12 +27,12 @@ public class ProfileActivity extends AppCompatActivity {
 
     private DatabaseReference userRef;
     private FirebaseUser currentUser;
-    private boolean isEditing = false; // flag for edit/save mode
+    private boolean isEditing = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile); // replace with your XML filename
+        setContentView(R.layout.activity_profile);
 
         // Initialize views
         usernameTextView = findViewById(R.id.username);
@@ -67,10 +60,8 @@ public class ProfileActivity extends AppCompatActivity {
 
         userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
 
-        // Load existing profile data
         loadProfile();
 
-        // Edit Profile Button Click
         editProfileButton.setOnClickListener(v -> {
             if (isEditing) {
                 saveProfile();
@@ -79,10 +70,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
-        // Back to Home Button Click
-        backHomeButton.setOnClickListener(v -> {
-            finish(); // go back to previous screen
-        });
+        backHomeButton.setOnClickListener(v -> finish());
     }
 
     private void loadProfile() {
@@ -118,14 +106,14 @@ public class ProfileActivity extends AppCompatActivity {
     private void enableEditing() {
         isEditing = true;
         editProfileButton.setText("Save");
+        editProfileButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.ic_save, 0, 0, 0);
+        editProfileButton.setCompoundDrawablePadding(16);
 
-        // Show EditTexts
         editName.setVisibility(View.VISIBLE);
         editMobile.setVisibility(View.VISIBLE);
         editEmail.setVisibility(View.VISIBLE);
         editAddress.setVisibility(View.VISIBLE);
 
-        // Pre-fill EditTexts with current values
         editName.setText(textName.getText().toString().replace("Name: ", ""));
         editMobile.setText(textMobile.getText().toString().replace("Mobile: ", ""));
         editEmail.setText(textEmail.getText().toString().replace("Email: ", ""));
@@ -156,15 +144,16 @@ public class ProfileActivity extends AppCompatActivity {
             if (task.isSuccessful()) {
                 Toast.makeText(ProfileActivity.this, "Profile updated", Toast.LENGTH_SHORT).show();
                 isEditing = false;
-                editProfileButton.setText("Edit Profile");
 
-                // Hide EditTexts
+                editProfileButton.setText("Edit Profile");
+                editProfileButton.setCompoundDrawablesWithIntrinsicBounds(R.drawable.edit_24, 0, 0, 0);
+                editProfileButton.setCompoundDrawablePadding(16);
+
                 editName.setVisibility(View.GONE);
                 editMobile.setVisibility(View.GONE);
                 editEmail.setVisibility(View.GONE);
                 editAddress.setVisibility(View.GONE);
 
-                // Reload profile to show updated info
                 loadProfile();
             } else {
                 Toast.makeText(ProfileActivity.this, "Failed to update profile", Toast.LENGTH_SHORT).show();

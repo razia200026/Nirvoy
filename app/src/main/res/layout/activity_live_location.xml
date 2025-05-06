@@ -51,7 +51,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="100dp"
-        android:backgroundTint="#4E31AA"
+        android:backgroundTint="#3A1078"
         android:drawablePadding="12dp"
         android:elevation="4dp"
         android:fontFamily="sans-serif-medium"

@@ -44,7 +44,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:backgroundTint="@color/blue"
+                android:backgroundTint="#3A1078"
                 android:text="SEND"
                 android:textSize="16sp"
                 android:textColor="@android:color/white"
@@ -85,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="62dp"
             android:layout_marginTop="8dp"
-            android:backgroundTint="@color/blue"
+            android:backgroundTint="#3A1078"
             android:text="Save Message"
             android:textSize="20sp"
             android:textColor="@color/white" />
