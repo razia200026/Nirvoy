@@ -14,7 +14,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
-public class EmergencyMessageActivity extends AppCompatActivity {
+public class EmergencyMessageActivity extends BaseActivity {
 
     private Button btnSend, btnSave;
     private EditText etMessage;

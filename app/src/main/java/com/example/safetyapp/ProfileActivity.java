@@ -17,7 +17,7 @@ import com.google.firebase.database.*;
 
 import java.util.HashMap;
 
-public class ProfileActivity extends AppCompatActivity {
+public class ProfileActivity extends BaseActivity {
 
     private TextView usernameTextView, emailTextView;
     private TextView textName, textMobile, textEmail, textAddress;

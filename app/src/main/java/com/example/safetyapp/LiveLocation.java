@@ -24,7 +24,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LiveLocation extends AppCompatActivity {
+public class LiveLocation extends BaseActivity {
 
     private static final int LOCATION_PERMISSION_CODE = 101;
     private static final int SMS_PERMISSION_CODE = 102;

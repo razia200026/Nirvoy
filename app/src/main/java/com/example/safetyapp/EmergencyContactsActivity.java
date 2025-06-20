@@ -31,7 +31,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class EmergencyContactsActivity extends AppCompatActivity {
+public class EmergencyContactsActivity extends BaseActivity {
 
     private DatabaseReference dbRef;
     private FirebaseUser currentUser;
