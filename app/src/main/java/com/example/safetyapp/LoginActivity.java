@@ -13,21 +13,14 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.auth.api.signin.GoogleSignIn;
-import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
-import com.google.android.gms.auth.api.signin.GoogleSignInClient;
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.auth.api.signin.*;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthCredential;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.auth.*;
 
 public class LoginActivity extends AppCompatActivity {
 
     private static final int RC_SIGN_IN = 1001;
-
     private EditText etEmail, etPassword;
     private ProgressBar progressBar;
     private FirebaseAuth mAuth;
@@ -39,27 +32,24 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Firebase Auth instance
         mAuth = FirebaseAuth.getInstance();
 
-        // Initialize Views
         etEmail = findViewById(R.id.inputEmail);
         etPassword = findViewById(R.id.inputPassword);
         progressBar = findViewById(R.id.progress_bar);
 
-        // Google Sign-In configuration
+        // Google Sign-In Setup
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))  // Defined in strings.xml
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
-        // Listeners
+        // Button Actions
         findViewById(R.id.btnLogin).setOnClickListener(v -> attemptLogin());
         findViewById(R.id.btnNewAccount).setOnClickListener(v ->
-                startActivity(new Intent(this, SignupActivity.class))
-        );
+                startActivity(new Intent(this, SignupActivity.class)));
         findViewById(R.id.googleSignInBtn).setOnClickListener(v -> signInWithGoogle());
         findViewById(R.id.forgetPassword).setOnClickListener(v -> showForgotPasswordDialog());
     }
@@ -68,38 +58,27 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etPassword.getText().toString().trim();
 
-        if (validateInputs(email, password)) {
-            performLogin(email, password);
-        }
-    }
-
-    private boolean validateInputs(String email, String password) {
         if (TextUtils.isEmpty(email)) {
             etEmail.setError("Email is required");
             etEmail.requestFocus();
-            return false;
+            return;
         }
+
         if (TextUtils.isEmpty(password)) {
             etPassword.setError("Password is required");
             etPassword.requestFocus();
-            return false;
+            return;
         }
-        return true;
-    }
 
-    private void performLogin(String email, String password) {
         progressBar.setVisibility(View.VISIBLE);
-
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(task -> {
                     progressBar.setVisibility(View.GONE);
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Login successful!", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Login successful!", Toast.LENGTH_SHORT).show();
                         navigateToMain();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Authentication failed: " +
-                                        (task.getException() != null ? task.getException().getMessage() : "Unknown error"),
-                                Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Login failed: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
@@ -118,21 +97,20 @@ public class LoginActivity extends AppCompatActivity {
                 GoogleSignInAccount account = task.getResult(ApiException.class);
                 firebaseAuthWithGoogle(account);
             } catch (ApiException e) {
-                Toast.makeText(this, "Google sign-in failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Google Sign-in failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }
     }
 
-    private void firebaseAuthWithGoogle(GoogleSignInAccount acct) {
-        AuthCredential credential = GoogleAuthProvider.getCredential(acct.getIdToken(), null);
+    private void firebaseAuthWithGoogle(GoogleSignInAccount account) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(account.getIdToken(), null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
                     if (task.isSuccessful()) {
-                        FirebaseUser user = mAuth.getCurrentUser();
-                        Toast.makeText(this, "Signed in as: " + user.getEmail(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Signed in as: " + mAuth.getCurrentUser().getEmail(), Toast.LENGTH_SHORT).show();
                         navigateToMain();
                     } else {
-                        Toast.makeText(this, "Firebase Google login failed", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Google authentication failed.", Toast.LENGTH_SHORT).show();
                     }
                 });
     }
@@ -140,19 +118,17 @@ public class LoginActivity extends AppCompatActivity {
     private void showForgotPasswordDialog() {
         EditText emailInput = new EditText(this);
         emailInput.setHint("Enter your registered email");
-        emailInput.setInputType(android.text.InputType.TYPE_TEXT_VARIATION_EMAIL_ADDRESS);
-        emailInput.setPadding(40, 20, 40, 20);
 
         new AlertDialog.Builder(this)
                 .setTitle("Reset Password")
-                .setMessage("We will send you a password reset link.")
+                .setMessage("We'll send a reset link to your email.")
                 .setView(emailInput)
                 .setPositiveButton("Send", (dialog, which) -> {
                     String email = emailInput.getText().toString().trim();
                     if (!TextUtils.isEmpty(email)) {
                         sendResetEmail(email);
                     } else {
-                        Toast.makeText(LoginActivity.this, "Please enter your email", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(this, "Please enter your email.", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", null)
@@ -163,15 +139,15 @@ public class LoginActivity extends AppCompatActivity {
         mAuth.sendPasswordResetEmail(email)
                 .addOnCompleteListener(task -> {
                     if (task.isSuccessful()) {
-                        Toast.makeText(LoginActivity.this, "Reset link sent to email", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Reset link sent to your email.", Toast.LENGTH_LONG).show();
                     } else {
-                        Toast.makeText(LoginActivity.this, "Failed to send reset email", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Error: " + task.getException().getMessage(), Toast.LENGTH_LONG).show();
                     }
                 });
     }
 
     private void navigateToMain() {
-        startActivity(new Intent(LoginActivity.this, MainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         finish();
     }
 

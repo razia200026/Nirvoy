@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="24dp"
-    android:background="@drawable/home_page">
+    android:background="@color/Light_Sky_Blue">
 
     <!-- Location Icon (Add vector drawable for better scalability) -->
     <ImageView
@@ -28,7 +28,7 @@
         android:text="Share Your Live Location"
         android:textSize="22sp"
         android:textStyle="bold"
-        android:textColor="#FFFFFF" />
+        android:textColor="@color/Deep_Navy" />
 
     <!-- Description Text -->
     <TextView
@@ -40,7 +40,7 @@
         android:layout_centerHorizontal="true"
         android:text="Let your emergency contacts know where you are in real-time."
         android:textSize="16sp"
-        android:textColor="#FFFFFF"
+        android:textColor="@color/Muted_Teal"
         android:gravity="center" />
 
     <!-- Share Location Button with Rounded Corners and Shadow -->
@@ -51,7 +51,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginTop="16dp"
         android:layout_marginBottom="100dp"
-        android:backgroundTint="#3A1078"
+        android:backgroundTint="@color/Deep_Navy"
         android:drawablePadding="12dp"
         android:elevation="4dp"
         android:fontFamily="sans-serif-medium"

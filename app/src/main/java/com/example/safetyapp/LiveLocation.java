@@ -7,7 +7,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.SmsManager;
-import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
@@ -25,7 +24,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
-public class live_location extends AppCompatActivity {
+public class LiveLocation extends AppCompatActivity {
 
     private static final int LOCATION_PERMISSION_CODE = 101;
     private static final int SMS_PERMISSION_CODE = 102;
@@ -87,7 +86,7 @@ public class live_location extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError error) {
-                Toast.makeText(live_location.this, "Failed to load contacts", Toast.LENGTH_SHORT).show();
+                Toast.makeText(LiveLocation.this, "Failed to load contacts", Toast.LENGTH_SHORT).show();
             }
         });
     }

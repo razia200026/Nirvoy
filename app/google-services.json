@@ -15,11 +15,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "160845916606-7usn3pn6df4hpfaqm76sddq49mebg4fe.apps.googleusercontent.com",
+          "client_id": "160845916606-hkr68o24ucn3abovv9gi7p7b4uf9mp44.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.example.safetyapp",
-            "certificate_hash": "d812260ad5449e4d5cc69de907a7d30c8d1a4164"
+            "certificate_hash": "51e64600ad206523d0cf1be6725331df96d20801"
           }
         },
         {

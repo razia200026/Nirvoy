@@ -3,21 +3,19 @@
     <!-- Basic colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <color name="colorPrimaryDark">#3262C4</color>    <!-- Material Blue 500 -->
-    <color name="red">#FFD32F2F</color>     <!-- Material Red 700 -->
-    <color name="gray">#FF9E9E9E</color>    <!-- Light Gray 300 -->
-    <color name="Leukocyte_White">#f2f1ed</color>
-    <color name="dark_primary">#0D47A1</color>
-
-
-
-
-
-
+    <color name="colorPrimaryDark">#22177A</color>
+    <color name="red">#FFD32F2F</color>
+    <color name="gray">#FF9E9E9E</color>
+    <color name="Deep_Navy">#052659</color>
+    <color name="Light_Sky_Blue">#C1E8FF</color>
+    <color name="soft_blue">#042752</color>
+    <color name="Muted_Teal">#548383</color>
+    <color name="blue">#2196F3</color>
+    <color name="blue_light">#BBDEFB</color>
+    <color name="Leukocyte_White">#FAFAFA</color>
 
     <!-- Optional: Shades for consistency -->
-    <color name="blue_light">#82E3FB</color> <!-- Light Blue 300 -->
-    <color name="red_light">#FFE57373</color> <!-- Light Red 300 -->
-    <color name="blue">#FF2196F3</color>
+    <color name="green">#347433</color>
+    <color name="red_light">#FFE57373</color>
     <color name="colorRed">#C11515</color>
 </resources>

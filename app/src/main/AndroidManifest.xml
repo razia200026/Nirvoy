@@ -41,7 +41,7 @@
 
     <!-- Other activities -->
     <activity android:name=".ProfileActivity" />
-    <activity android:name=".live_location" />
+    <activity android:name=".LiveLocation" />
     <activity android:name=".SignupActivity" />
     <activity android:name=".LoginActivity" />
     <activity
