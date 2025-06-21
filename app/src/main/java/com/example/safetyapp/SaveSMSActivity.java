@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.widget.*;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
@@ -24,7 +25,7 @@ import com.google.firebase.database.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class SendSMSActivity extends BaseActivity {
+public class SaveSMSActivity extends BaseActivity {
 
     private DatabaseReference dbRef;
     private FirebaseUser currentUser;
@@ -43,16 +44,17 @@ public class SendSMSActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupLayout(R.layout.activity_send_sms, "Emergency Contacts & Save SMS", true);  // Setup layout with title and back button
+        setupLayout(R.layout.activity_save_sms, "Emergency Contacts & Save SMS", true);
 
-        // Firebase & DB setup
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
             finish();
             return;
         }
-        dbRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid()).child("emergencyContacts");
+
+        dbRef = FirebaseDatabase.getInstance().getReference("Users")
+                .child(currentUser.getUid()).child("emergencyContacts");
 
         // Views
         btnAddContact = findViewById(R.id.btn_add_contact);
@@ -62,24 +64,18 @@ public class SendSMSActivity extends BaseActivity {
         tvNoContacts = findViewById(R.id.tv_no_contacts);
         rvContacts = findViewById(R.id.rv_contacts);
 
-        // Contacts RecyclerView setup
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ContactsAdapter(contacts, this::deleteContact);
         rvContacts.setAdapter(adapter);
 
-        // Load contacts from Firebase
         loadEmergencyContacts();
-
-        // Load saved message from Firebase
         loadSavedMessage();
 
-        // Setup countdown spinner with example values
         String[] countdownOptions = {"3 sec", "5 sec", "10 sec", "Cancel Immediately"};
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countdownOptions);
         spinnerCountdown.setAdapter(spinnerAdapter);
 
-        // Button listeners
-        btnAddContact.setOnClickListener(v -> showContactOptionsMenu(v));
+        btnAddContact.setOnClickListener(this::showContactOptionsMenu);
 
         btnSaveMessage.setOnClickListener(v -> {
             String message = etEmergencyMessage.getText().toString().trim();
@@ -88,7 +84,6 @@ public class SendSMSActivity extends BaseActivity {
                 return;
             }
 
-            // Save message in Firebase under "emergency_message_template"
             DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
             userRef.child("emergency_message_template").setValue(message)
                     .addOnSuccessListener(unused -> Toast.makeText(this, "Message saved successfully", Toast.LENGTH_SHORT).show())
@@ -109,7 +104,7 @@ public class SendSMSActivity extends BaseActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(SendSMSActivity.this, "Failed to load saved message", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SaveSMSActivity.this, "Failed to load saved message", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -127,13 +122,12 @@ public class SendSMSActivity extends BaseActivity {
                     }
                 }
                 adapter.notifyDataSetChanged();
-
                 tvNoContacts.setVisibility(contacts.isEmpty() ? View.VISIBLE : View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(SendSMSActivity.this, "Failed to load contacts", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SaveSMSActivity.this, "Failed to load contacts", Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -176,6 +170,19 @@ public class SendSMSActivity extends BaseActivity {
     }
 
     private void addContact(Contact contact) {
+        String phone = contact.getPhone().trim();
+
+        // Add +880 if missing
+        if (!phone.startsWith("+")) {
+            if (phone.startsWith("0")) {
+                phone = "+880" + phone.substring(1);
+            } else {
+                phone = "+880" + phone;
+            }
+        }
+
+        contact.setPhone(phone);
+
         dbRef.push().setValue(contact)
                 .addOnSuccessListener(unused -> Toast.makeText(this, "Contact added!", Toast.LENGTH_SHORT).show())
                 .addOnFailureListener(e -> Toast.makeText(this, "Failed to add contact", Toast.LENGTH_SHORT).show());

@@ -43,10 +43,10 @@ public class MainActivity extends BaseActivity {
         // Button click listeners for card items
         //Save contact and SMS
         findViewById(R.id.btn_save_contatcs).setOnClickListener(v ->
-                startActivity(new android.content.Intent(MainActivity.this, SendSMSActivity.class)));
+                startActivity(new android.content.Intent(MainActivity.this, SaveSMSActivity.class)));
         //AI Voice Detector
         findViewById(R.id.btn_ai_voice).setOnClickListener(v ->
-                startActivity(new android.content.Intent(MainActivity.this, SendSMSActivity.class)));
+                startActivity(new android.content.Intent(MainActivity.this, SaveSMSActivity.class)));
         //Live Location
         findViewById(R.id.btn_share_location).setOnClickListener(v ->
                 startActivity(new android.content.Intent(MainActivity.this, LiveLocation.class)));

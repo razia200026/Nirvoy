@@ -50,7 +50,7 @@
         android:label="SafeZoneActivity"
         android:parentActivityName=".MainActivity" />
         <activity
-        android:name=".SendSMSActivity"
+        android:name=".SaveSMSActivity"
         android:label="Sms Settings"
         android:parentActivityName=".MainActivity" />
 </application>
