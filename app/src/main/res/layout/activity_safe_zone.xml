@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@color/Light_Sky_Blue">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_status"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="You are in a Safe Zone"
+            android:textSize="20sp"
+            android:textColor="@color/Deep_Navy"
+            android:layout_centerHorizontal="true" />
+
+        <EditText
+            android:id="@+id/et_custom_message"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_status"
+            android:layout_marginTop="24dp"
+            android:hint="Enter your custom message (optional)"
+            android:inputType="textMultiLine"
+            android:minLines="3"
+            android:background="@color/white"
+            android:padding="10dp" />
+
+        <Spinner
+            android:id="@+id/spinner_method"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/et_custom_message"
+            android:layout_marginTop="16dp" />
+
+        <Button
+            android:id="@+id/btn_send_ok"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Send Message"
+            android:backgroundTint="@color/Deep_Navy"
+            android:layout_below="@id/spinner_method"
+            android:layout_marginTop="20dp" />
+    </RelativeLayout>
+</ScrollView>

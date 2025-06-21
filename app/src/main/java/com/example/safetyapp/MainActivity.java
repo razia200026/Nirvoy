@@ -19,7 +19,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupLayout(R.layout.activity_main); // Your main content layout
+        setupLayout(R.layout.activity_main, "", false); // Add title and back button flag
 
         // Pulse Effect Setup
         pulseView = findViewById(R.id.pulse_view);
@@ -41,13 +41,17 @@ public class MainActivity extends BaseActivity {
         });
 
         // Button click listeners for card items
-        findViewById(R.id.btn_send_message).setOnClickListener(v ->
-                startActivity(new android.content.Intent(MainActivity.this, EmergencyMessageActivity.class)));
-
+        //Save contact and SMS
+        findViewById(R.id.btn_save_contatcs).setOnClickListener(v ->
+                startActivity(new android.content.Intent(MainActivity.this, SendSMSActivity.class)));
+        //AI Voice Detector
         findViewById(R.id.btn_ai_voice).setOnClickListener(v ->
-                startActivity(new android.content.Intent(MainActivity.this, EmergencyContactsActivity.class)));
-
+                startActivity(new android.content.Intent(MainActivity.this, SendSMSActivity.class)));
+        //Live Location
         findViewById(R.id.btn_share_location).setOnClickListener(v ->
                 startActivity(new android.content.Intent(MainActivity.this, LiveLocation.class)));
+        //Safe Zone
+        findViewById(R.id.btn_safe_zone).setOnClickListener(v ->
+                startActivity(new android.content.Intent(MainActivity.this, SafeZoneActivity.class)));
     }
 }

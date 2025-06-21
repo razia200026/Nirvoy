@@ -39,7 +39,8 @@ public class LiveLocation extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_live_location);
+        setupLayout(R.layout.activity_live_location, "Live Location", true);
+//        setContentView(R.layout.activity_live_location);
 
         btnShare = findViewById(R.id.btnShareLocation);
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);

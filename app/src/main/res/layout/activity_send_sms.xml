@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/Light_Sky_Blue"
+    android:padding="16dp">
+    <!-- Instruction text -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Save an emergency contact to send a text message with your location."
+        android:textSize="16sp"
+        android:textColor="@android:color/black" />
+
+    <!-- Add emergency contact button -->
+    <Button
+        android:id="@+id/btn_add_contact"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:drawableEnd="@drawable/ic_add"
+        android:drawableRight="@drawable/ic_add"
+        android:drawablePadding="8dp"
+        android:backgroundTint="@color/Deep_Navy"
+        android:text="Add emergency contact's"
+        android:textAllCaps="false"
+        android:textColor="@android:color/white"
+        android:textSize="16sp" />
+
+    <!-- Divider -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Emergency Contacts"
+        android:textAlignment="center"
+        android:textColor="@color/Deep_Navy"
+        android:textSize="18dp"
+        android:textStyle="bold" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginVertical="16dp"
+        android:background="@android:color/darker_gray" />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_contacts"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Save Custom Message:"
+        android:textColor="@color/Deep_Navy"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/et_emergency_message"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="8dp"
+        android:background="@android:color/white"
+        android:gravity="top"
+        android:padding="12dp"
+        android:hint="Enter your message..."
+        android:textColor="@android:color/black"
+        android:inputType="textMultiLine" />
+
+    <Button
+        android:id="@+id/btn_save_message"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Save Message"
+        android:backgroundTint="@color/Deep_Navy"
+        android:textColor="@android:color/white" />
+
+
+    <!-- Countdown dropdown -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:text="Countdown timer to abort sending message:"
+        android:textColor="@android:color/black"
+        android:textSize="12dp"
+        android:textStyle="bold" />
+
+    <Spinner
+        android:id="@+id/spinner_countdown"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:spinnerMode="dropdown"
+        android:backgroundTint="@color/black"
+        android:padding="8dp"
+        android:layout_gravity="start" />
+
+    <!-- Contacts Section -->
+
+    <TextView
+        android:id="@+id/tv_no_contacts"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No contacts added"
+        android:textColor="@color/Deep_Navy"
+        android:layout_marginTop="12dp"
+        android:visibility="gone"
+        android:textAlignment="center" />
+
+
+</LinearLayout>

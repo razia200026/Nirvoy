@@ -9,14 +9,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.view.View;
-import android.widget.EditText;
-import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
-
+import android.widget.*;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -27,28 +22,30 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-public class EmergencyContactsActivity extends BaseActivity {
+public class SendSMSActivity extends BaseActivity {
 
     private DatabaseReference dbRef;
     private FirebaseUser currentUser;
     private ContactsAdapter adapter;
     private List<Contact> contacts = new ArrayList<>();
 
+    private TextView tvNoContacts;
+    private RecyclerView rvContacts;
+    private Button btnAddContact, btnSaveMessage;
+    private EditText etEmergencyMessage;
+    private Spinner spinnerCountdown;
+
     private static final int REQUEST_CONTACT_PERMISSION = 1001;
     private static final int REQUEST_PICK_CONTACT = 1002;
-
-    private TextView tvNoContacts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_emergency_contacts);
+        setupLayout(R.layout.activity_send_sms, "Emergency Contacts & Save SMS", true);  // Setup layout with title and back button
 
-        // Initialize Firebase
+        // Firebase & DB setup
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
             Toast.makeText(this, "User not logged in", Toast.LENGTH_SHORT).show();
@@ -57,19 +54,64 @@ public class EmergencyContactsActivity extends BaseActivity {
         }
         dbRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid()).child("emergencyContacts");
 
-        // Initialize Views
-        RecyclerView recyclerView = findViewById(R.id.rv_contacts);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ContactsAdapter(contacts, this::deleteContact);
-        recyclerView.setAdapter(adapter);
-
+        // Views
+        btnAddContact = findViewById(R.id.btn_add_contact);
+        btnSaveMessage = findViewById(R.id.btn_save_message);
+        etEmergencyMessage = findViewById(R.id.et_emergency_message);
+        spinnerCountdown = findViewById(R.id.spinner_countdown);
         tvNoContacts = findViewById(R.id.tv_no_contacts);
+        rvContacts = findViewById(R.id.rv_contacts);
 
-        // Load existing data
+        // Contacts RecyclerView setup
+        rvContacts.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new ContactsAdapter(contacts, this::deleteContact);
+        rvContacts.setAdapter(adapter);
+
+        // Load contacts from Firebase
         loadEmergencyContacts();
 
-        // Add button
-        findViewById(R.id.fab_add_contact).setOnClickListener(v -> showContactOptionsMenu(v));
+        // Load saved message from Firebase
+        loadSavedMessage();
+
+        // Setup countdown spinner with example values
+        String[] countdownOptions = {"3 sec", "5 sec", "10 sec", "Cancel Immediately"};
+        ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countdownOptions);
+        spinnerCountdown.setAdapter(spinnerAdapter);
+
+        // Button listeners
+        btnAddContact.setOnClickListener(v -> showContactOptionsMenu(v));
+
+        btnSaveMessage.setOnClickListener(v -> {
+            String message = etEmergencyMessage.getText().toString().trim();
+            if (message.isEmpty()) {
+                Toast.makeText(this, "Message cannot be empty", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
+            // Save message in Firebase under "emergency_message_template"
+            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+            userRef.child("emergency_message_template").setValue(message)
+                    .addOnSuccessListener(unused -> Toast.makeText(this, "Message saved successfully", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to save message", Toast.LENGTH_SHORT).show());
+        });
+    }
+
+    private void loadSavedMessage() {
+        DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
+        userRef.child("emergency_message_template").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (snapshot.exists()) {
+                    String savedMessage = snapshot.getValue(String.class);
+                    etEmergencyMessage.setText(savedMessage);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+                Toast.makeText(SendSMSActivity.this, "Failed to load saved message", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     private void loadEmergencyContacts() {
@@ -86,18 +128,30 @@ public class EmergencyContactsActivity extends BaseActivity {
                 }
                 adapter.notifyDataSetChanged();
 
-                if (contacts.isEmpty()) {
-                    tvNoContacts.setVisibility(View.VISIBLE);
-                } else {
-                    tvNoContacts.setVisibility(View.GONE);
-                }
+                tvNoContacts.setVisibility(contacts.isEmpty() ? View.VISIBLE : View.GONE);
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-                Toast.makeText(EmergencyContactsActivity.this, "Failed to load contacts", Toast.LENGTH_SHORT).show();
+                Toast.makeText(SendSMSActivity.this, "Failed to load contacts", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    private void showContactOptionsMenu(View anchor) {
+        PopupMenu popupMenu = new PopupMenu(this, anchor);
+        popupMenu.getMenuInflater().inflate(R.menu.contact_menu, popupMenu.getMenu());
+        popupMenu.setOnMenuItemClickListener(item -> {
+            if (item.getItemId() == R.id.menu_add_manual) {
+                showAddContactDialog();
+                return true;
+            } else if (item.getItemId() == R.id.menu_pick_contact) {
+                checkContactPermission();
+                return true;
+            }
+            return false;
+        });
+        popupMenu.show();
     }
 
     private void showAddContactDialog() {
@@ -113,6 +167,8 @@ public class EmergencyContactsActivity extends BaseActivity {
                     String phone = etPhone.getText().toString().trim();
                     if (!name.isEmpty() && !phone.isEmpty()) {
                         addContact(new Contact(name, phone));
+                    } else {
+                        Toast.makeText(this, "Please enter name and phone", Toast.LENGTH_SHORT).show();
                     }
                 })
                 .setNegativeButton("Cancel", null)
@@ -142,22 +198,6 @@ public class EmergencyContactsActivity extends BaseActivity {
         }
     }
 
-    private void showContactOptionsMenu(View anchor) {
-        PopupMenu popupMenu = new PopupMenu(this, anchor);
-        popupMenu.getMenuInflater().inflate(R.menu.contact_menu, popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(item -> {
-            if (item.getItemId() == R.id.menu_add_manual) {
-                showAddContactDialog();
-                return true;
-            } else if (item.getItemId() == R.id.menu_pick_contact) {
-                checkContactPermission();
-                return true;
-            }
-            return false;
-        });
-        popupMenu.show();
-    }
-
     private void openContactPicker() {
         Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
         startActivityForResult(intent, REQUEST_PICK_CONTACT);
@@ -170,7 +210,7 @@ public class EmergencyContactsActivity extends BaseActivity {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 openContactPicker();
             } else {
-                Toast.makeText(this, "Permission denied", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Permission denied to read contacts", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -178,24 +218,25 @@ public class EmergencyContactsActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == REQUEST_PICK_CONTACT && resultCode == Activity.RESULT_OK) {
+        if (requestCode == REQUEST_PICK_CONTACT && resultCode == Activity.RESULT_OK && data != null) {
             Uri contactUri = data.getData();
-            String id = null, name = null, phone = null;
+            if (contactUri == null) {
+                Toast.makeText(this, "Failed to get contact", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
+            String id = null, name = null, phone = null;
             Cursor cursor = getContentResolver().query(contactUri, null, null, null, null);
             if (cursor != null && cursor.moveToFirst()) {
                 id = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts._ID));
                 name = cursor.getString(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.DISPLAY_NAME));
-
                 int hasPhoneNumber = cursor.getInt(cursor.getColumnIndexOrThrow(ContactsContract.Contacts.HAS_PHONE_NUMBER));
                 if (hasPhoneNumber > 0) {
                     Cursor phoneCursor = getContentResolver().query(
                             ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                             null,
                             ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = ?",
-                            new String[]{id}, null
-                    );
-
+                            new String[]{id}, null);
                     if (phoneCursor != null && phoneCursor.moveToFirst()) {
                         phone = phoneCursor.getString(phoneCursor.getColumnIndexOrThrow(ContactsContract.CommonDataKinds.Phone.NUMBER));
                         phoneCursor.close();
@@ -207,7 +248,7 @@ public class EmergencyContactsActivity extends BaseActivity {
             if (name != null && phone != null) {
                 addContact(new Contact(name, phone));
             } else {
-                Toast.makeText(this, "Failed to get contact", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Failed to get contact details", Toast.LENGTH_SHORT).show();
             }
         }
     }

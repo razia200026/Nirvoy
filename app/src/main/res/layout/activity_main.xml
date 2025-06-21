@@ -97,7 +97,7 @@
 
             <!-- 1. Send Message to Emergency Contact -->
             <androidx.cardview.widget.CardView
-                android:id="@+id/btn_send_message"
+                android:id="@+id/btn_save_contatcs"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
                 android:layout_margin="10dp"

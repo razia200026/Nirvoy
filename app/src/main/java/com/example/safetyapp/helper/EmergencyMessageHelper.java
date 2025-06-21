@@ -129,4 +129,43 @@ public class EmergencyMessageHelper {
             Toast.makeText(activity, "Error sending WhatsApp message", Toast.LENGTH_SHORT).show();
         }
     }
+    public void sendCustomMessage(String method, String customMessage) {
+        if ("sms".equals(method) && ContextCompat.checkSelfPermission(activity, Manifest.permission.SEND_SMS)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(activity, new String[]{Manifest.permission.SEND_SMS}, SMS_PERMISSION_CODE);
+            return;
+        }
+
+        userRef.child("emergencyContacts").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot snapshot) {
+                contacts.clear();
+                for (DataSnapshot contactSnapshot : snapshot.getChildren()) {
+                    Contact contact = contactSnapshot.getValue(Contact.class);
+                    if (contact != null) {
+                        contacts.add(contact);
+                    }
+                }
+
+                if (contacts.isEmpty()) {
+                    Toast.makeText(activity, "No emergency contacts found", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
+                for (Contact contact : contacts) {
+                    if ("sms".equals(method)) {
+                        sendSms(contact.getPhone(), customMessage);
+                    } else {
+                        sendWhatsApp(contact.getPhone(), customMessage);
+                    }
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                Toast.makeText(activity, "Failed to load contacts", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
 }
