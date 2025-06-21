@@ -22,7 +22,7 @@ public class ProfileActivity extends BaseActivity {
     private TextView usernameTextView, emailTextView;
     private TextView textName, textMobile, textEmail, textAddress;
     private EditText editName, editMobile, editEmail, editAddress;
-    private MaterialButton editProfileButton, backHomeButton;
+    private MaterialButton editProfileButton;
     private ProgressBar progressBar;
 
     private DatabaseReference userRef;
@@ -48,7 +48,6 @@ public class ProfileActivity extends BaseActivity {
         editAddress = findViewById(R.id.edit_address);
 
         editProfileButton = findViewById(R.id.btn_edit_profile);
-        backHomeButton = findViewById(R.id.btn_back_home);
         progressBar = findViewById(R.id.progressBar);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
@@ -70,7 +69,6 @@ public class ProfileActivity extends BaseActivity {
             }
         });
 
-        backHomeButton.setOnClickListener(v -> finish());
     }
 
     private void loadProfile() {

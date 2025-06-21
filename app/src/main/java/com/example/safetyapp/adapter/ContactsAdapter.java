@@ -1,4 +1,4 @@
-package com.example.safetyapp;
+package com.example.safetyapp.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
@@ -8,8 +8,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.example.safetyapp.Contact;
+import com.example.safetyapp.R;
+
 import java.util.List;
 import java.util.Random;
 

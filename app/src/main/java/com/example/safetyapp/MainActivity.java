@@ -50,6 +50,9 @@ public class MainActivity extends BaseActivity {
         //Live Location
         findViewById(R.id.btn_share_location).setOnClickListener(v ->
                 startActivity(new android.content.Intent(MainActivity.this, LiveLocation.class)));
+        //IncaseEmargency
+        findViewById(R.id.btn_emergency_mode).setOnClickListener(v ->
+                startActivity(new android.content.Intent(MainActivity.this, InCaseEmergencyActivity.class)));
         //Safe Zone
         findViewById(R.id.btn_safe_zone).setOnClickListener(v ->
                 startActivity(new android.content.Intent(MainActivity.this, SafeZoneActivity.class)));

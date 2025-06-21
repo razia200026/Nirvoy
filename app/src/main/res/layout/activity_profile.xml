@@ -246,22 +246,6 @@
 
     </LinearLayout>
 
-        <!-- Back to Home Button -->
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btn_back_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
-            android:backgroundTint="@color/Deep_Navy"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
-            android:text="Back to Home"
-            android:textColor="@android:color/white"
-            app:icon="@drawable/arrow_back_24"
-            app:iconGravity="textStart"
-            app:iconPadding="8dp" />
-
         <ProgressBar
             android:id="@+id/progressBar"
             android:layout_width="wrap_content"

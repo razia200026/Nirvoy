@@ -49,9 +49,13 @@
         android:name=".SafeZoneActivity"
         android:label="SafeZoneActivity"
         android:parentActivityName=".MainActivity" />
-        <activity
+    <activity
         android:name=".SaveSMSActivity"
         android:label="Sms Settings"
         android:parentActivityName=".MainActivity" />
+    <activity
+            android:name=".InCaseEmergencyActivity"
+            android:label="InCaseEmergencyActivity Settings"
+            android:parentActivityName=".MainActivity" />
 </application>
     </manifest>
