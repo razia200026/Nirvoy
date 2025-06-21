@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/home_page">
+    android:background="@color/Light_Sky_Blue">
 
     <LinearLayout
         android:orientation="vertical"
@@ -37,7 +37,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="Username"
-                android:textColor="#3A1078"
+                android:textColor="@color/Deep_Navy"
                 android:textSize="20sp"
                 android:textStyle="bold" />
 
@@ -57,7 +57,7 @@
                 android:text="Edit Profile"
                 app:icon="@drawable/edit_24"
                 android:textColor="@android:color/white"
-                android:backgroundTint="#3A1078"
+                android:backgroundTint="@color/Deep_Navy"
                 app:iconGravity="textStart"
                 app:iconPadding="8dp"
                 android:paddingStart="20dp"
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:text="Account Info"
             android:textSize="25sp"
-            android:textColor="#3A1078"
+            android:textColor="@color/Deep_Navy"
             android:textStyle="bold"
             android:layout_marginTop="20dp" />
 
@@ -253,7 +253,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dp"
-            android:backgroundTint="#3A1078"
+            android:backgroundTint="@color/Deep_Navy"
             android:paddingStart="20dp"
             android:paddingEnd="20dp"
             android:text="Back to Home"
