@@ -65,7 +65,8 @@ public class SaveSMSActivity extends BaseActivity {
         rvContacts = findViewById(R.id.rv_contacts);
 
         rvContacts.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ContactsAdapter(contacts, this::deleteContact);
+        adapter = new ContactsAdapter(contacts, this::deleteContact, this::editContact);
+//        adapter = new ContactsAdapter(contacts, this::deleteContact);
         rvContacts.setAdapter(adapter);
 
         loadEmergencyContacts();
@@ -74,7 +75,6 @@ public class SaveSMSActivity extends BaseActivity {
         String[] countdownOptions = {"3 sec", "5 sec", "10 sec", "Cancel Immediately"};
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countdownOptions);
         spinnerCountdown.setAdapter(spinnerAdapter);
-
         btnAddContact.setOnClickListener(this::showContactOptionsMenu);
 
         btnSaveMessage.setOnClickListener(v -> {
@@ -220,6 +220,43 @@ public class SaveSMSActivity extends BaseActivity {
                 Toast.makeText(this, "Permission denied to read contacts", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+
+    private void editContact(Contact contact) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View view = getLayoutInflater().inflate(R.layout.dialog_add_contact, null);
+        EditText etName = view.findViewById(R.id.et_name);
+        EditText etPhone = view.findViewById(R.id.et_phone);
+
+        etName.setText(contact.getName());
+        etPhone.setText(contact.getPhone());
+
+        builder.setView(view)
+                .setTitle("Edit Contact")
+                .setPositiveButton("Update", (dialog, which) -> {
+                    String newName = etName.getText().toString().trim();
+                    String newPhone = etPhone.getText().toString().trim();
+
+                    if (!newName.isEmpty() && !newPhone.isEmpty()) {
+                        if (!newPhone.startsWith("+")) {
+                            if (newPhone.startsWith("0")) {
+                                newPhone = "+880" + newPhone.substring(1);
+                            } else {
+                                newPhone = "+880" + newPhone;
+                            }
+                        }
+
+                        contact.setName(newName);
+                        contact.setPhone(newPhone);
+                        dbRef.child(contact.getId()).setValue(contact)
+                                .addOnSuccessListener(unused -> Toast.makeText(this, "Contact updated", Toast.LENGTH_SHORT).show())
+                                .addOnFailureListener(e -> Toast.makeText(this, "Failed to update contact", Toast.LENGTH_SHORT).show());
+                    } else {
+                        Toast.makeText(this, "Please enter name and phone", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .setNegativeButton("Cancel", null)
+                .show();
     }
 
     @Override

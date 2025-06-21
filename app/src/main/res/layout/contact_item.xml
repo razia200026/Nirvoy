@@ -3,60 +3,75 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="8dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="4dp">
+    android:layout_margin="10dp"
+    android:foreground="?attr/selectableItemBackground"
+    app:cardCornerRadius="16dp"
+    app:cardElevation="6dp"
+    android:backgroundTint="@android:color/white">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="12dp">
+        android:padding="5dp">
 
         <TextView
             android:id="@+id/tv_profile_icon"
-            android:layout_width="48dp"
-            android:layout_height="48dp"
+            android:layout_width="56dp"
+            android:layout_height="56dp"
+            android:background="@drawable/circle_background"
             android:gravity="center"
             android:text="A"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:background="@drawable/profile_circle"
+            android:textColor="@android:color/white"
+            android:textSize="22sp"
+            android:textStyle="bold"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
+            app:layout_constraintBottom_toBottomOf="parent" />
 
         <TextView
             android:id="@+id/tv_contact_name"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="John Doe"
+            android:text="Alice Wonderland"
+            android:textSize="17sp"
             android:textStyle="bold"
-            android:textSize="16sp"
+            android:textColor="@color/Deep_Navy"
+            android:layout_marginStart="12dp"
             app:layout_constraintStart_toEndOf="@id/tv_profile_icon"
             app:layout_constraintTop_toTopOf="@id/tv_profile_icon"
-            android:layout_marginStart="12dp"
-            app:layout_constraintEnd_toStartOf="@id/btn_delete"/>
+            app:layout_constraintEnd_toStartOf="@id/btn_edit" />
 
         <TextView
             android:id="@+id/tv_contact_phone"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="123-456-7890"
+            android:text="01700-123456"
             android:textSize="14sp"
-            android:textColor="#666666"
+            android:textColor="#7B8D93"
             app:layout_constraintStart_toStartOf="@id/tv_contact_name"
             app:layout_constraintTop_toBottomOf="@id/tv_contact_name"
-            app:layout_constraintEnd_toEndOf="@id/tv_contact_name"/>
+            app:layout_constraintEnd_toEndOf="@id/tv_contact_name" />
+
+        <ImageView
+            android:id="@+id/btn_edit"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
+            android:layout_marginEnd="10dp"
+            android:src="@drawable/edit_24"
+            android:contentDescription="Edit"
+            app:tint="#2196F3"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/btn_delete" />
 
         <ImageView
             android:id="@+id/btn_delete"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="28dp"
+            android:layout_height="28dp"
             android:src="@drawable/ic_delete"
             android:contentDescription="Delete"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:tint="#F44336"
             app:layout_constraintTop_toTopOf="parent"
-            app:tint="#F44336" />
+            app:layout_constraintEnd_toEndOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
