@@ -46,7 +46,7 @@ public class MainActivity extends BaseActivity {
                 startActivity(new android.content.Intent(MainActivity.this, SaveSMSActivity.class)));
         //AI Voice Detector
         findViewById(R.id.btn_ai_voice).setOnClickListener(v ->
-                startActivity(new android.content.Intent(MainActivity.this, SaveSMSActivity.class)));
+                startActivity(new android.content.Intent(MainActivity.this, AIVoiceActivity.class)));
         //Live Location
         findViewById(R.id.btn_share_location).setOnClickListener(v ->
                 startActivity(new android.content.Intent(MainActivity.this, LiveLocation.class)));
