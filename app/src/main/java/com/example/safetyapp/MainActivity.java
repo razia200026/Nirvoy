@@ -1,6 +1,7 @@
 // MainActivity.java
 package com.example.safetyapp;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -19,7 +20,7 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupLayout(R.layout.activity_main, "", false); // Add title and back button flag
+        setupLayout(R.layout.activity_main, "Welcome to নির্ভয়!", false,R.id.nav_home); // Add title and back button flag
 
         // Pulse Effect Setup
         pulseView = findViewById(R.id.pulse_view);
@@ -28,17 +29,35 @@ public class MainActivity extends BaseActivity {
         // Load the pulse animation
         pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse);
 
+//        startShakeButton.setOnClickListener(v -> {
+//            pulseView.startAnimation(pulseAnimation);
+//            new AlertDialog.Builder(MainActivity.this)
+//                    .setTitle("SOS")
+//                    .setMessage("Send emergency message via WhatsApp or SMS?")
+//                    .setPositiveButton("WhatsApp", (dialog, which) ->
+//                            new EmergencyMessageHelper(MainActivity.this).sendMessage("whatsapp"))
+//                    .setNegativeButton("SMS", (dialog, which) ->
+//                            new EmergencyMessageHelper(MainActivity.this).sendMessage("sms"))
+//                    .show();
+//        });
         startShakeButton.setOnClickListener(v -> {
             pulseView.startAnimation(pulseAnimation);
             new AlertDialog.Builder(MainActivity.this)
                     .setTitle("SOS")
                     .setMessage("Send emergency message via WhatsApp or SMS?")
-                    .setPositiveButton("WhatsApp", (dialog, which) ->
-                            new EmergencyMessageHelper(MainActivity.this).sendMessage("whatsapp"))
-                    .setNegativeButton("SMS", (dialog, which) ->
-                            new EmergencyMessageHelper(MainActivity.this).sendMessage("sms"))
+                    .setPositiveButton("WhatsApp", (dialog, which) -> {
+                        Intent intent = new Intent(MainActivity.this, PopupCountdownActivity.class);
+                        intent.putExtra("method", "whatsapp");
+                        startActivity(intent);
+                    })
+                    .setNegativeButton("SMS", (dialog, which) -> {
+                        Intent intent = new Intent(MainActivity.this, PopupCountdownActivity.class);
+                        intent.putExtra("method", "sms");
+                        startActivity(intent);
+                    })
                     .show();
         });
+
 
         // Button click listeners for card items
         //Save contact and SMS

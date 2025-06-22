@@ -28,7 +28,7 @@ public class AIVoiceActivity extends BaseActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupLayout(R.layout.activity_ai_voice, "AI Voice Detection", true);
+        setupLayout(R.layout.activity_ai_voice, "AI Voice Detection", true,R.id.nav_home);
 
         // Bind views
         switchEnableVoice = findViewById(R.id.switchEnableVoice);

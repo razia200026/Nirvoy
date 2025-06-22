@@ -24,7 +24,9 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.*;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class SaveSMSActivity extends BaseActivity {
 
@@ -45,7 +47,7 @@ public class SaveSMSActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setupLayout(R.layout.activity_save_sms, "Emergency Contacts & Save SMS", true);
+        setupLayout(R.layout.activity_save_sms, "Emergency Contacts & Save SMS", true,R.id.nav_home);
 
         currentUser = FirebaseAuth.getInstance().getCurrentUser();
         if (currentUser == null) {
@@ -73,10 +75,11 @@ public class SaveSMSActivity extends BaseActivity {
         loadEmergencyContacts();
         loadSavedMessage();
 
-        String[] countdownOptions = {"3 sec", "5 sec", "10 sec", "Cancel Immediately"};
+        String[] countdownOptions = {"5 sec", "10 sec", "30 sec", "Send Immediately"};
         ArrayAdapter<String> spinnerAdapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, countdownOptions);
         spinnerCountdown.setAdapter(spinnerAdapter);
         btnAddContact.setOnClickListener(this::showContactOptionsMenu);
+
 
         btnSaveMessage.setOnClickListener(v -> {
             String message = etEmergencyMessage.getText().toString().trim();
@@ -85,11 +88,27 @@ public class SaveSMSActivity extends BaseActivity {
                 return;
             }
 
-            DatabaseReference userRef = FirebaseDatabase.getInstance().getReference("Users").child(currentUser.getUid());
-            userRef.child("emergency_message_template").setValue(message)
-                    .addOnSuccessListener(unused -> Toast.makeText(this, "Message saved successfully", Toast.LENGTH_SHORT).show())
-                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to save message", Toast.LENGTH_SHORT).show());
+            int countdownSeconds;
+            switch (spinnerCountdown.getSelectedItemPosition()) {
+                case 0: countdownSeconds = 5; break;
+                case 1: countdownSeconds = 10; break;
+                case 2: countdownSeconds = 30; break;
+                default: countdownSeconds = 0; break;
+            }
+
+            DatabaseReference userRef = FirebaseDatabase.getInstance()
+                    .getReference("Users")
+                    .child(currentUser.getUid());
+
+            Map<String, Object> updateMap = new HashMap<>();
+            updateMap.put("emergency_message_template", message);
+            updateMap.put("countdown_timer_seconds", countdownSeconds);
+
+            userRef.updateChildren(updateMap)
+                    .addOnSuccessListener(unused -> Toast.makeText(this, "Message & Countdown saved", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(this, "Failed to save data", Toast.LENGTH_SHORT).show());
         });
+
     }
 
     private void loadSavedMessage() {

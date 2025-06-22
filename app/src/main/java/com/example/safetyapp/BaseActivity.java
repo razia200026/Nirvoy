@@ -32,11 +32,12 @@ public abstract class BaseActivity extends AppCompatActivity {
     /**
      * Sets up the base layout with navigation drawer, bottom nav, toolbar with title and back button.
      *
-     * @param layoutResId   The layout resource id for the activity's main content.
-     * @param title         The toolbar title text. Pass null or empty string for no title.
-     * @param showBackButton True to show back button, false to hide.
+     * @param layoutResId       The layout resource id for the activity's main content.
+     * @param title             The toolbar title text. Pass null or empty string for no title.
+     * @param showBackButton    True to show back button, false to hide.
+     * @param selectedNavItemId The menu item id to select in BottomNavigationView.
      */
-    protected void setupLayout(int layoutResId, @Nullable String title, boolean showBackButton) {
+    protected void setupLayout(int layoutResId, @Nullable String title, boolean showBackButton, int selectedNavItemId) {
         setContentView(R.layout.activity_base);
 
         // Inflate the activity content layout into FrameLayout inside base layout
@@ -67,18 +68,32 @@ public abstract class BaseActivity extends AppCompatActivity {
             btnBack.setOnClickListener(v -> onBackPressed());
         }
 
-        // Setup bottom navigation listener
+        // Setup bottom navigation listener and set selected item
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
+
+        // Select the current item
+        bottomNav.setSelectedItemId(selectedNavItemId);
+
         bottomNav.setOnItemSelectedListener(item -> {
             int id = item.getItemId();
+
             if (id == R.id.nav_home) {
-                startActivity(new Intent(this, MainActivity.class));
+                Intent intent = new Intent(this, MainActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+                finish();
                 return true;
             } else if (id == R.id.nav_settings) {
-                startActivity(new Intent(this, LiveLocation.class));
+                if (selectedNavItemId != R.id.nav_settings) {
+                    startActivity(new Intent(this, SettingsActivity.class));
+                    finish();
+                }
                 return true;
             } else if (id == R.id.nav_profile) {
-                startActivity(new Intent(this, ProfileActivity.class));
+                if (selectedNavItemId != R.id.nav_profile) {
+                    startActivity(new Intent(this, ProfileActivity.class));
+                    finish();
+                }
                 return true;
             } else if (id == R.id.nav_logout) {
                 logoutUser();
