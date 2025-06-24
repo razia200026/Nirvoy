@@ -5,108 +5,137 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Build;
-import android.os.Vibrator;
 import android.telephony.SmsManager;
+import android.util.Log;
 
-import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
-import androidx.core.app.NotificationManagerCompat;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.*;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class EmergencyMessageHelper {
 
     private final Context context;
+    private static final String CHANNEL_ID = "emergency_alert_channel";
 
     public EmergencyMessageHelper(Context context) {
         this.context = context;
     }
 
     public void sendMessage(String method) {
-        String message = "This is your emergency message. I need help!";
-
-        if ("sms".equalsIgnoreCase(method)) {
-            sendSmsToContacts(message);
-            showPushNotification("Emergency SMS Sent", "Your SOS has been sent to emergency contacts.");
-        } else if ("whatsapp".equalsIgnoreCase(method)) {
-            // Placeholder for WhatsApp
-            showPushNotification("WhatsApp Triggered", "SOS will be sent via WhatsApp.");
+        FirebaseUser user = FirebaseAuth.getInstance().getCurrentUser();
+        if (user == null) {
+            Log.e("EmergencyHelper", "User not authenticated");
+            return;
         }
-    }
 
-    private void sendSmsToContacts(String message) {
-        try {
-            // Replace with your actual contact list from Firebase or local DB
-            List<String> contacts = List.of("01700000000", "01800000000");
+        String uid = user.getUid();
+        DatabaseReference contactsRef = FirebaseDatabase.getInstance()
+                .getReference("Users").child(uid).child("contacts");
 
-            SmsManager smsManager = SmsManager.getDefault();
-            for (String number : contacts) {
-                smsManager.sendTextMessage(number, null, message, null, null);
+        DatabaseReference msgRef = FirebaseDatabase.getInstance()
+                .getReference("Users").child(uid).child("emergency_message");
+
+        msgRef.get().addOnSuccessListener(msgSnap -> {
+            String message = msgSnap.getValue(String.class);
+            if (message == null || message.isEmpty()) {
+                message = "This is an emergency. Please help me!";
             }
+
+            String finalMessage = message;
+            contactsRef.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot snapshot) {
+                    List<String> contactList = new ArrayList<>();
+                    for (DataSnapshot contactSnap : snapshot.getChildren()) {
+                        String phone = contactSnap.child("phone").getValue(String.class);
+                        if (phone != null && !phone.isEmpty()) {
+                            contactList.add(phone);
+                        }
+                    }
+
+                    for (String number : contactList) {
+                        if ("sms".equalsIgnoreCase(method)) {
+                            sendSMS(number, finalMessage);
+                        } else {
+                            sendWhatsApp(number, finalMessage);
+                        }
+                    }
+
+                    showNotification("Emergency Alert Sent", "Your emergency message was sent successfully.");
+                }
+
+                @Override
+                public void onCancelled(DatabaseError error) {
+                    Log.e("EmergencyHelper", "Failed to fetch contacts: " + error.getMessage());
+                }
+            });
+        });
+    }
+
+    private void sendSMS(String phoneNumber, String message) {
+        try {
+            SmsManager smsManager = SmsManager.getDefault();
+            ArrayList<String> parts = smsManager.divideMessage(message);
+            smsManager.sendMultipartTextMessage(phoneNumber, null, parts, null, null);
         } catch (Exception e) {
-            e.printStackTrace();
+            Log.e("EmergencyHelper", "SMS failed: " + e.getMessage());
         }
     }
 
-    private void showPushNotification(String title, String message) {
-        String CHANNEL_ID = "safety_alert_channel";
-        String CHANNEL_NAME = "Safety Alerts";
+    private void sendWhatsApp(String phoneNumber, String message) {
+        try {
+            String url = "https://wa.me/" + phoneNumber + "?text=" + Uri.encode(message);
+            Intent intent = new Intent(Intent.ACTION_VIEW);
+            intent.setData(Uri.parse(url));
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        } catch (Exception e) {
+            Log.e("EmergencyHelper", "WhatsApp failed: " + e.getMessage());
+        }
+    }
 
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+    private void showNotification(String title, String message) {
+        NotificationManager manager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
-        // Intent to open MainActivity when notification tapped
-        Intent intent = new Intent(context, MainActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-
-        int flags = Build.VERSION.SDK_INT >= Build.VERSION_CODES.S ?
-                PendingIntent.FLAG_IMMUTABLE : PendingIntent.FLAG_UPDATE_CURRENT;
-
-        PendingIntent pendingIntent = PendingIntent.getActivity(context, 0, intent, flags);
-
-        // Create notification channel for Android 8+
+        // Create channel for Android 8+
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             NotificationChannel channel = new NotificationChannel(
                     CHANNEL_ID,
-                    CHANNEL_NAME,
+                    "Emergency Alerts",
                     NotificationManager.IMPORTANCE_HIGH
             );
-            channel.setDescription("SOS emergency alerts");
-            channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+            channel.setDescription("Used for emergency alert notifications");
             channel.enableVibration(true);
-            channel.setVibrationPattern(new long[]{0, 1000, 1000, 1000}); // 3 seconds vibration
-            channel.setSound(null, null); // Disable sound
-            notificationManager.createNotificationChannel(channel);
+            channel.setVibrationPattern(new long[]{0, 5000}); // 5 seconds vibration
+            manager.createNotificationChannel(channel);
         }
 
+        Intent intent = new Intent(context, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(
+                context,
+                0,
+                intent,
+                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE
+        );
+
         NotificationCompat.Builder builder = new NotificationCompat.Builder(context, CHANNEL_ID)
-                .setSmallIcon(R.drawable.ic_launcher_foreground)  // Change to your app icon
+                .setSmallIcon(R.drawable.ic_notification) // Replace with your icon
                 .setContentTitle(title)
                 .setContentText(message)
                 .setPriority(NotificationCompat.PRIORITY_HIGH)
-                .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
-                .setVibrate(new long[]{0, 1000, 1000, 1000})
-                .setSound(null)
-                .setContentIntent(pendingIntent)
-                .setAutoCancel(true);
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC) // Lock screen visibility
+                .setVibrate(new long[]{0, 5000}) // 5 sec vibration
+                .setAutoCancel(true)
+                .setContentIntent(pendingIntent);
 
-        NotificationManagerCompat.from(context).notify(202, builder.build());
-
-        vibratePhone();
-    }
-
-    private void vibratePhone() {
-        Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
-        if (vibrator != null) {
-            long[] pattern = {0, 1000, 1000, 1000}; // vibrate for 3 seconds total
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-                vibrator.vibrate(android.os.VibrationEffect.createWaveform(pattern, -1));
-            } else {
-                vibrator.vibrate(pattern, -1);
-            }
-        }
+        manager.notify(1001, builder.build());
     }
 }
