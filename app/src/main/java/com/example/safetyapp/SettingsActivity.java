@@ -4,6 +4,9 @@ import android.Manifest;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -14,6 +17,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 public class SettingsActivity extends BaseActivity {
 
     private SwitchMaterial switchSound, switchVibration, switchContacts, switchVoiceDetection;
+    private Spinner spinnerPressCount;
     private SharedPreferences prefs;
 
     private static final int REQ_CONTACTS_PERMISSION = 1001;
@@ -22,19 +26,16 @@ public class SettingsActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // IMPORTANT: Setup base layout with your settings layout, toolbar title, back button, and selected bottom nav item
         setupLayout(R.layout.activity_settings, "Settings", true, R.id.nav_settings);
 
         prefs = getSharedPreferences("AppSettingsPrefs", MODE_PRIVATE);
 
-        // Initialize switches after layout is set
         switchSound = findViewById(R.id.switch_sound);
         switchVibration = findViewById(R.id.switch_vibration);
         switchContacts = findViewById(R.id.switch_contacts);
         switchVoiceDetection = findViewById(R.id.switch_voice_detection);
+        spinnerPressCount = findViewById(R.id.spinner_press_count);
 
-        // Load saved states
         switchSound.setChecked(prefs.getBoolean("sound", true));
         switchVibration.setChecked(prefs.getBoolean("vibration", true));
         switchContacts.setChecked(prefs.getBoolean("contacts", false));
@@ -51,27 +52,39 @@ public class SettingsActivity extends BaseActivity {
         });
 
         switchContacts.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.READ_CONTACTS},
-                            REQ_CONTACTS_PERMISSION);
-                }
+            if (isChecked && ContextCompat.checkSelfPermission(this, Manifest.permission.READ_CONTACTS)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.READ_CONTACTS},
+                        REQ_CONTACTS_PERMISSION);
             }
             prefs.edit().putBoolean("contacts", isChecked).apply();
         });
 
         switchVoiceDetection.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                if (ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
-                        != PackageManager.PERMISSION_GRANTED) {
-                    ActivityCompat.requestPermissions(this,
-                            new String[]{Manifest.permission.RECORD_AUDIO},
-                            REQ_RECORD_AUDIO_PERMISSION);
-                }
+            if (isChecked && ContextCompat.checkSelfPermission(this, Manifest.permission.RECORD_AUDIO)
+                    != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this,
+                        new String[]{Manifest.permission.RECORD_AUDIO},
+                        REQ_RECORD_AUDIO_PERMISSION);
             }
             prefs.edit().putBoolean("voice_detection", isChecked).apply();
+        });
+
+        // Set up spinner for press count
+        int savedCount = prefs.getInt("power_press_count", 3); // Default is 3
+        spinnerPressCount.setSelection(savedCount - 2); // Index: 2=0, 3=1, 4=2, 5=3
+
+        spinnerPressCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int selectedCount = position + 2;
+                prefs.edit().putInt("power_press_count", selectedCount).apply();
+                Toast.makeText(SettingsActivity.this, "Trigger set to " + selectedCount + " presses", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
         });
     }
 
@@ -83,7 +96,6 @@ public class SettingsActivity extends BaseActivity {
                 && grantResults.length > 0 && grantResults[0] != PackageManager.PERMISSION_GRANTED) {
             Toast.makeText(this, "Permission denied. You can enable it from settings.", Toast.LENGTH_LONG).show();
 
-            // Revert the switch toggle if permission denied
             if (requestCode == REQ_CONTACTS_PERMISSION) {
                 switchContacts.setChecked(false);
                 prefs.edit().putBoolean("contacts", false).apply();

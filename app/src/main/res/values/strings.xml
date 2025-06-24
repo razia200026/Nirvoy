@@ -2,5 +2,13 @@
 <!--    <string name="app_name">SafetyApp</string>-->
     <string name="app_name">নির্ভয়</string>
     <string name="welcome_message">Welcome to নির্ভয়!</string>
-    <string name="default_web_client_id">160845916606-0kd9a7ktjj2gtjk0abk4p3sdmrskc72j.apps.googleusercontent.com</string>
+
+
+    <string-array name="press_count_options">
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+    </string-array>
+
 </resources>

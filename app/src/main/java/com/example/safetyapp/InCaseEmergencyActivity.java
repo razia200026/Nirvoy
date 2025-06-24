@@ -27,11 +27,11 @@ public class InCaseEmergencyActivity extends BaseActivity {
 
         List<EmergencyService> services = Arrays.asList(
                 new EmergencyService("Police", "999", R.drawable.e911_emergency_24px),
-                new EmergencyService("Ambulance", "199", R.drawable.ambulance_24px),
-                new EmergencyService("Fire Service", "998", R.drawable.fire_truck_24px),
-                new EmergencyService("Local Hospital", "12345", R.drawable.ambulance_24px),
+                new EmergencyService("Ambulance", "103", R.drawable.ambulance_24px),
+                new EmergencyService("Fire Service", "102", R.drawable.fire_truck_24px),
+                new EmergencyService("Local Hospital", "16263", R.drawable.ambulance_24px),
                 new EmergencyService("Child Helpline", "1098", R.drawable.account_child_24px),
-                new EmergencyService("Women Helpline", "10921", R.drawable.account_child_24px)
+                new EmergencyService("violence against women and children","109", R.drawable.account_child_24px)
         );
 
         EmergencyServiceAdapter adapter = new EmergencyServiceAdapter(services, service -> {
