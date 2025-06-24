@@ -12,7 +12,9 @@
     <color name="Muted_Teal">#548383</color>
     <color name="blue">#2196F3</color>
     <color name="blue_light">#BBDEFB</color>
-    <color name="Leukocyte_White">#FAFAFA</color>
+
+    <color name="blue_icon">#1623EE</color>
+
 
     <!-- Optional: Shades for consistency -->
     <color name="green">#347433</color>
