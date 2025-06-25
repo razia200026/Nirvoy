@@ -92,6 +92,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:text="Forgot Password?"
+            android:textStyle="bold"
             android:textColor="@color/Deep_Navy"
             android:textSize="15dp"
             app:layout_constraintEnd_toEndOf="@+id/inputPassword"
