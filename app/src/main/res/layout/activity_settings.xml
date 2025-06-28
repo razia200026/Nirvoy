@@ -19,7 +19,7 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="6dp"
-            android:backgroundTint="@android:color/white">
+            android:backgroundTint="@color/soft_blue">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -36,7 +36,7 @@
                     android:layout_height="36dp"
                     android:src="@drawable/ic_sound"
                     android:layout_marginEnd="16dp"
-                    app:tint="@color/Deep_Navy" />
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -44,7 +44,7 @@
                     android:layout_weight="1"
                     android:text="Enable Beep Sound"
                     android:textSize="17sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="sans-serif-medium" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
@@ -64,7 +64,7 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="6dp"
-            android:backgroundTint="@android:color/white">
+            android:backgroundTint="@color/soft_blue">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -81,7 +81,7 @@
                     android:layout_height="36dp"
                     android:src="@drawable/ic_vibration"
                     android:layout_marginEnd="16dp"
-                    app:tint="@color/Deep_Navy" />
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -89,7 +89,7 @@
                     android:layout_weight="1"
                     android:text="Enable Vibration"
                     android:textSize="17sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="sans-serif-medium" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
@@ -109,7 +109,7 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="6dp"
-            android:backgroundTint="@android:color/white">
+            android:backgroundTint="@color/soft_blue">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -126,7 +126,7 @@
                     android:layout_height="36dp"
                     android:src="@drawable/account_child_24px"
                     android:layout_marginEnd="16dp"
-                    app:tint="@color/Deep_Navy" />
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -134,7 +134,7 @@
                     android:layout_weight="1"
                     android:text="Allow Contact Access"
                     android:textSize="17sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="sans-serif-medium" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
@@ -153,7 +153,7 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="6dp"
-            android:backgroundTint="@android:color/white">
+            android:backgroundTint="@color/soft_blue">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -170,7 +170,7 @@
                     android:layout_height="36dp"
                     android:src="@drawable/ic_voice"
                     android:layout_marginEnd="16dp"
-                    app:tint="@color/Deep_Navy" />
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -178,7 +178,7 @@
                     android:layout_weight="1"
                     android:text="Enable Voice Detection"
                     android:textSize="17sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="sans-serif-medium" />
 
                 <com.google.android.material.switchmaterial.SwitchMaterial
@@ -197,7 +197,7 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="6dp"
-            android:backgroundTint="@android:color/white">
+            android:backgroundTint="@color/soft_blue">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -209,9 +209,9 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/ic_settings"
+                    android:src="@drawable/power_press"
                     android:layout_marginEnd="16dp"
-                    app:tint="@color/Deep_Navy" />
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -219,14 +219,14 @@
                     android:layout_weight="1"
                     android:text="Power Button Presses to Trigger SOS"
                     android:textSize="17sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="sans-serif-medium" />
 
                 <Spinner
                     android:id="@+id/spinner_press_count"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:spinnerMode="dropdown"
+                    android:textColor="@color/white"
                     android:entries="@array/press_count_options" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>
@@ -237,7 +237,7 @@
             android:layout_marginBottom="16dp"
             app:cardCornerRadius="20dp"
             app:cardElevation="6dp"
-            android:backgroundTint="@android:color/white">
+            android:backgroundTint="@color/soft_blue">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -249,9 +249,9 @@
                 <ImageView
                     android:layout_width="36dp"
                     android:layout_height="36dp"
-                    android:src="@drawable/ic_settings"
+                    android:src="@drawable/ic_shaker"
                     android:layout_marginEnd="16dp"
-                    app:tint="@color/Deep_Navy" />
+                    app:tint="@color/white" />
 
                 <TextView
                     android:layout_width="0dp"
@@ -259,7 +259,7 @@
                     android:layout_weight="1"
                     android:text="Shakes to Trigger SOS"
                     android:textSize="17sp"
-                    android:textColor="@color/black"
+                    android:textColor="@color/white"
                     android:fontFamily="sans-serif-medium" />
 
                 <Spinner
@@ -267,6 +267,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:spinnerMode="dropdown"
+                    android:textColor="@color/white"
                     android:entries="@array/shake_count_options" />
             </LinearLayout>
         </androidx.cardview.widget.CardView>

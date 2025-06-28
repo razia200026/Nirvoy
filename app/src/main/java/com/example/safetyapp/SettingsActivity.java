@@ -5,8 +5,11 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
@@ -36,6 +39,7 @@ public class SettingsActivity extends BaseActivity {
         switchVoiceDetection = findViewById(R.id.switch_voice_detection);
         spinnerPressCount = findViewById(R.id.spinner_press_count);
         spinnerShakeCount = findViewById(R.id.spinner_shake_count);
+        // Load switch preferences
 
         switchSound.setChecked(prefs.getBoolean("sound", true));
         switchVibration.setChecked(prefs.getBoolean("vibration", true));
