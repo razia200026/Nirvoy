@@ -3,6 +3,7 @@ package com.example.safetyapp;
 import android.Manifest;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorManager;
@@ -15,7 +16,6 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
@@ -34,32 +34,37 @@ public class MainActivity extends BaseActivity {
     private Sensor accelerometer;
     private ShakeDetector shakeDetector;
 
+    private SharedPreferences prefs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setupLayout(R.layout.activity_main, "Welcome to নির্ভয়!", false, R.id.nav_home);
 
-        // UI & Animation
         pulseView = findViewById(R.id.pulse_view);
         FrameLayout startShakeButton = findViewById(R.id.btn_sos);
         pulseAnimation = AnimationUtils.loadAnimation(this, R.anim.pulse);
 
-        // Request permissions
+        prefs = getSharedPreferences("AppSettingsPrefs", MODE_PRIVATE);
+
         requestNotificationPermission();
         requestSMSPermission();
 
-        // Shake detection setup
         sensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
         accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
+
         shakeDetector = new ShakeDetector(() -> {
             new EmergencyMessageHelper(MainActivity.this).sendMessage("sms");
             Toast.makeText(MainActivity.this, "Emergency SMS Sent by Shake!", Toast.LENGTH_SHORT).show();
         });
 
-        // SOS button manually triggers prompt
+        // Load saved shake count from settings and set to detector
+        int shakeCountSetting = prefs.getInt("shake_count_threshold", 3);
+        shakeDetector.setRequiredShakeCount(shakeCountSetting);
+
         startShakeButton.setOnClickListener(v -> {
             pulseView.startAnimation(pulseAnimation);
-            new AlertDialog.Builder(MainActivity.this)
+            new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this)
                     .setTitle("SOS")
                     .setMessage("Send emergency message via WhatsApp or SMS?")
                     .setPositiveButton("WhatsApp", (dialog, which) ->
@@ -69,14 +74,12 @@ public class MainActivity extends BaseActivity {
                     .show();
         });
 
-        // Power button triple press receiver
         powerButtonReceiver = new PowerButtonReceiver();
         IntentFilter filter = new IntentFilter();
         filter.addAction(Intent.ACTION_SCREEN_ON);
         filter.addAction(Intent.ACTION_SCREEN_OFF);
         registerReceiver(powerButtonReceiver, filter);
 
-        // Navigation buttons
         findViewById(R.id.btn_save_contatcs).setOnClickListener(v ->
                 startActivity(new Intent(MainActivity.this, SaveSMSActivity.class)));
 
@@ -96,6 +99,13 @@ public class MainActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
+
+        // Reload shake count in case user changed it in settings
+        int shakeCountSetting = prefs.getInt("shake_count_threshold", 3);
+        if (shakeDetector != null) {
+            shakeDetector.setRequiredShakeCount(shakeCountSetting);
+        }
+
         if (sensorManager != null && shakeDetector != null) {
             sensorManager.registerListener(shakeDetector, accelerometer, SensorManager.SENSOR_DELAY_UI);
         }

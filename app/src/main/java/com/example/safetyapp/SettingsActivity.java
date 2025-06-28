@@ -17,7 +17,7 @@ import com.google.android.material.switchmaterial.SwitchMaterial;
 public class SettingsActivity extends BaseActivity {
 
     private SwitchMaterial switchSound, switchVibration, switchContacts, switchVoiceDetection;
-    private Spinner spinnerPressCount;
+    private Spinner spinnerPressCount, spinnerShakeCount;
     private SharedPreferences prefs;
 
     private static final int REQ_CONTACTS_PERMISSION = 1001;
@@ -35,6 +35,7 @@ public class SettingsActivity extends BaseActivity {
         switchContacts = findViewById(R.id.switch_contacts);
         switchVoiceDetection = findViewById(R.id.switch_voice_detection);
         spinnerPressCount = findViewById(R.id.spinner_press_count);
+        spinnerShakeCount = findViewById(R.id.spinner_shake_count);
 
         switchSound.setChecked(prefs.getBoolean("sound", true));
         switchVibration.setChecked(prefs.getBoolean("vibration", true));
@@ -71,16 +72,30 @@ public class SettingsActivity extends BaseActivity {
             prefs.edit().putBoolean("voice_detection", isChecked).apply();
         });
 
-        // Set up spinner for press count
-        int savedCount = prefs.getInt("power_press_count", 3); // Default is 3
-        spinnerPressCount.setSelection(savedCount - 2); // Index: 2=0, 3=1, 4=2, 5=3
-
+        // Power button press count spinner (existing)
+        int savedCount = prefs.getInt("power_press_count", 3);
+        spinnerPressCount.setSelection(savedCount - 2);
         spinnerPressCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 int selectedCount = position + 2;
                 prefs.edit().putInt("power_press_count", selectedCount).apply();
                 Toast.makeText(SettingsActivity.this, "Trigger set to " + selectedCount + " presses", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {}
+        });
+
+        // Shake count spinner (new)
+        int savedShakeCount = prefs.getInt("shake_count_threshold", 3);
+        spinnerShakeCount.setSelection(savedShakeCount - 1);
+        spinnerShakeCount.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                int selectedShakeCount = position + 1;
+                prefs.edit().putInt("shake_count_threshold", selectedShakeCount).apply();
+                Toast.makeText(SettingsActivity.this, "Shake count set to " + selectedShakeCount, Toast.LENGTH_SHORT).show();
             }
 
             @Override
