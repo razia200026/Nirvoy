@@ -6,14 +6,21 @@ import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
 public class ShakeDetector implements SensorEventListener {
-
+    // Recommended: start with a lower threshold — adjust to your testing
     private static final float SHAKE_THRESHOLD_GRAVITY = 2.7F;
+
+    // Ignore shake events that happen too close together (in ms)
+    private static final int SHAKE_SLOP_TIME_MS = 500;
+
+    // If no shake happens within this time, reset the count (in ms)
     private static final int SHAKE_COUNT_RESET_TIME_MS = 3000;
+
+    // How many valid shakes to trigger the listener
     private static final int REQUIRED_SHAKE_COUNT = 3;
 
     private final OnShakeListener listener;
-    private int shakeCount = 0;
-    private long lastShakeTimestamp = 0;
+    private long mShakeTimestamp;
+    private int mShakeCount;
 
     public interface OnShakeListener {
         void onShake();
@@ -38,15 +45,21 @@ public class ShakeDetector implements SensorEventListener {
         if (gForce > SHAKE_THRESHOLD_GRAVITY) {
             final long now = System.currentTimeMillis();
 
-            if (lastShakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < now) {
-                shakeCount = 0;
+            // Ignore this shake if it's too close to the previous one
+            if (mShakeTimestamp + SHAKE_SLOP_TIME_MS > now) {
+                return;
             }
 
-            lastShakeTimestamp = now;
-            shakeCount++;
+            // Reset count if enough time has passed without a shake
+            if (mShakeTimestamp + SHAKE_COUNT_RESET_TIME_MS < now) {
+                mShakeCount = 0;
+            }
 
-            if (shakeCount >= REQUIRED_SHAKE_COUNT) {
-                shakeCount = 0;
+            mShakeTimestamp = now;
+            mShakeCount++;
+
+            if (mShakeCount >= REQUIRED_SHAKE_COUNT) {
+                mShakeCount = 0;
                 listener.onShake();
             }
         }
