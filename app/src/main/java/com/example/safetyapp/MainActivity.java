@@ -67,12 +67,19 @@ public class MainActivity extends BaseActivity {
             new androidx.appcompat.app.AlertDialog.Builder(MainActivity.this)
                     .setTitle("SOS")
                     .setMessage("Send emergency message via WhatsApp or SMS?")
-                    .setPositiveButton("WhatsApp", (dialog, which) ->
-                            new EmergencyMessageHelper(MainActivity.this).sendMessage("whatsapp"))
-                    .setNegativeButton("SMS", (dialog, which) ->
-                            new EmergencyMessageHelper(MainActivity.this).sendMessage("sms"))
+                    .setPositiveButton("WhatsApp", (dialog, which) -> {
+                        EmergencyMessageHelper helper = new EmergencyMessageHelper(MainActivity.this);
+                        helper.sendMessage("whatsapp");
+                        helper.postToFacebookFeed("🚨 Emergency Alert! I might be in danger. Please check on me. #SafeApp");
+                    })
+                    .setNegativeButton("SMS", (dialog, which) -> {
+                        EmergencyMessageHelper helper = new EmergencyMessageHelper(MainActivity.this);
+                        helper.sendMessage("sms");
+                        helper.postToFacebookFeed("🚨 Emergency Alert! I might be in danger. Please check on me. #SafeApp");
+                    })
                     .show();
         });
+
 
         powerButtonReceiver = new PowerButtonReceiver();
         IntentFilter filter = new IntentFilter();

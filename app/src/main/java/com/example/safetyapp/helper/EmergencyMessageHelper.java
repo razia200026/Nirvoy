@@ -1,10 +1,8 @@
-// EmergencyMessageHelper.java
 package com.example.safetyapp.helper;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -16,6 +14,8 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.safetyapp.Contact;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationServices;
 import com.google.firebase.auth.FirebaseAuth;
@@ -90,6 +90,10 @@ public class EmergencyMessageHelper {
                                                 sendWhatsApp(contact.getPhone(), message);
                                             }
                                         }
+
+                                        // Post to Facebook feed
+                                        postToFacebookFeed(message);
+
                                     } else {
                                         Toast.makeText(activity, "Unable to get location", Toast.LENGTH_SHORT).show();
                                     }
@@ -116,6 +120,7 @@ public class EmergencyMessageHelper {
             Toast.makeText(activity, "SMS sent to " + phone, Toast.LENGTH_SHORT).show();
         } catch (Exception e) {
             Toast.makeText(activity, "Failed to send SMS to " + phone, Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
 
@@ -127,8 +132,10 @@ public class EmergencyMessageHelper {
             activity.startActivity(intent);
         } catch (Exception e) {
             Toast.makeText(activity, "Error sending WhatsApp message", Toast.LENGTH_SHORT).show();
+            e.printStackTrace();
         }
     }
+
     public void sendCustomMessage(String method, String customMessage) {
         if ("sms".equals(method) && ContextCompat.checkSelfPermission(activity, Manifest.permission.SEND_SMS)
                 != PackageManager.PERMISSION_GRANTED) {
@@ -159,6 +166,9 @@ public class EmergencyMessageHelper {
                         sendWhatsApp(contact.getPhone(), customMessage);
                     }
                 }
+
+                // Post to Facebook
+                postToFacebookFeed(customMessage);
             }
 
             @Override
@@ -168,4 +178,17 @@ public class EmergencyMessageHelper {
         });
     }
 
+    public void postToFacebookFeed(String message) {
+        if (ShareDialog.canShow(ShareLinkContent.class)) {
+            ShareLinkContent content = new ShareLinkContent.Builder()
+                    .setQuote(message)
+                    .setContentUrl(Uri.parse("https://safetyapp.page.link/alert")) // Change to your own link if needed
+                    .build();
+
+            ShareDialog shareDialog = new ShareDialog(activity);
+            shareDialog.show(content);
+        } else {
+            Toast.makeText(activity, "Facebook share dialog not available", Toast.LENGTH_SHORT).show();
+        }
+    }
 }
