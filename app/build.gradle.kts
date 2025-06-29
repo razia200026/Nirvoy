@@ -44,7 +44,10 @@ dependencies {
     implementation ("com.google.android.gms:play-services-auth:21.3.0")
     implementation ("com.google.firebase:firebase-auth:23.2.1")
     implementation ("jp.wasabeef:blurry:4.0.0")
-
+    implementation ("com.facebook.android:facebook-android-sdk:latest.release")
+    implementation ("androidx.browser:browser:1.5.0")
+    implementation ("com.facebook.android:facebook-android-sdk:latest_version")
+    implementation ("com.google.firebase:firebase-auth:latest_version")
 
 
 }
