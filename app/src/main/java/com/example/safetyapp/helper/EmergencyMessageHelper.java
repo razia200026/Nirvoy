@@ -3,14 +3,20 @@ package com.example.safetyapp.helper;
 import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.net.Uri;
+import android.os.Build;
 import android.telephony.SmsManager;
 import android.widget.Toast;
 
 import androidx.core.app.ActivityCompat;
+import androidx.core.app.NotificationCompat;
 import androidx.core.content.ContextCompat;
 
 import com.example.safetyapp.Contact;
@@ -91,9 +97,7 @@ public class EmergencyMessageHelper {
                                             }
                                         }
 
-                                        // Post to Facebook feed
                                         postToFacebookFeed(message);
-
                                     } else {
                                         Toast.makeText(activity, "Unable to get location", Toast.LENGTH_SHORT).show();
                                     }
@@ -118,6 +122,7 @@ public class EmergencyMessageHelper {
         try {
             SmsManager.getDefault().sendTextMessage(phone, null, message, null, null);
             Toast.makeText(activity, "SMS sent to " + phone, Toast.LENGTH_SHORT).show();
+            showSimpleNotification("Emergency SMS Sent", "Message sent to " + phone);
         } catch (Exception e) {
             Toast.makeText(activity, "Failed to send SMS to " + phone, Toast.LENGTH_SHORT).show();
             e.printStackTrace();
@@ -167,7 +172,6 @@ public class EmergencyMessageHelper {
                     }
                 }
 
-                // Post to Facebook
                 postToFacebookFeed(customMessage);
             }
 
@@ -182,7 +186,7 @@ public class EmergencyMessageHelper {
         if (ShareDialog.canShow(ShareLinkContent.class)) {
             ShareLinkContent content = new ShareLinkContent.Builder()
                     .setQuote(message)
-                    .setContentUrl(Uri.parse("https://safetyapp.page.link/alert")) // Change to your own link if needed
+                    .setContentUrl(Uri.parse("https://safetyapp.page.link/alert"))
                     .build();
 
             ShareDialog shareDialog = new ShareDialog(activity);
@@ -190,5 +194,35 @@ public class EmergencyMessageHelper {
         } else {
             Toast.makeText(activity, "Facebook share dialog not available", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private void showSimpleNotification(String title, String message) {
+        String channelId = "sms_channel";
+        NotificationManager notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+
+        // Create channel for Android 8+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationChannel channel = new NotificationChannel(
+                    channelId,
+                    "SMS Notifications",
+                    NotificationManager.IMPORTANCE_HIGH
+            );
+            channel.setDescription("Notification for emergency SMS sent");
+            channel.enableVibration(true);
+            channel.setVibrationPattern(new long[]{0, 1000, 500, 1000});
+            channel.setLockscreenVisibility(NotificationCompat.VISIBILITY_PUBLIC);
+            notificationManager.createNotificationChannel(channel);
+        }
+
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(activity, channelId)
+                .setSmallIcon(android.R.drawable.ic_dialog_info)
+                .setContentTitle(title)
+                .setContentText(message)
+                .setPriority(NotificationCompat.PRIORITY_HIGH)
+                .setVisibility(NotificationCompat.VISIBILITY_PUBLIC)
+                .setVibrate(new long[]{0, 1000, 500, 1000})
+                .setAutoCancel(true);
+
+        notificationManager.notify((int) System.currentTimeMillis(), builder.build());
     }
 }
