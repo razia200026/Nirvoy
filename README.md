@@ -1,6 +1,6 @@
 # Nirvoy - AI Powered Personal Safety App
 
-![Nirvoy Logo](screenshots/logo.png) <!-- Optional logo -->
+![Nirvoy Logo](screenshots/icon.png) 
 
 Nirvoy (নির্ভয়) is an Android-based **AI-powered personal safety application** designed to help users stay safe in emergencies. It enables real-time communication with emergency contacts through SMS, WhatsApp, and Facebook, and includes smart AI-based features like voice distress detection and hardware-triggered SOS alerts.
 
@@ -48,13 +48,13 @@ Nirvoy (নির্ভয়) is an Android-based **AI-powered personal safety app
 
 ## 📲 Screenshots
 
-| Home | Emergency Message | Contact List |
+| Home | SMS and Emargency Contacts | AI Voice Activate |
 |------|-------------------|--------------|
-| ![Home](screenshots/home.png) | ![Message](screenshots/message.png) | ![Contacts](screenshots/contacts.png) |
+| ![Home](screenshots/home.png) | ![Message](screenshots/message.png) | ![AI](screenshots/ai.png) |
 
-| SOS Trigger | AI Detection | Location Sharing |
+| Safe Zone | In Case Emargency | Location Sharing |
 |-------------|--------------|------------------|
-| ![Trigger](screenshots/sos_trigger.png) | ![AI](screenshots/ai_detection.png) | ![Location](screenshots/location.png) |
+| ![Trigger](screenshots/safe.png) | ![AI](screenshots/incase.png) | ![Location](screenshots/location.png) |
 
 ---
 
