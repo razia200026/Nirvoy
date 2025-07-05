@@ -104,11 +104,6 @@ To ensure full functionality, the app requests the following permissions:
 
 Feel free to fork the project, submit issues, or propose features and improvements.
 
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
 
 ---
 
